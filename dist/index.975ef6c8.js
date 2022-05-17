@@ -3941,6 +3941,7 @@ function Search() {
     };
     const searchDom = (e)=>{
         e.preventDefault();
+        fetch(`http://127.0.0.1:3000/hello?=${search}`);
         console.log(search);
     };
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -3953,7 +3954,7 @@ function Search() {
                         children: "Enter an https://"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 19,
+                        lineNumber: 20,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -3967,7 +3968,7 @@ function Search() {
                         required: true
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 20,
+                        lineNumber: 21,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -3976,26 +3977,26 @@ function Search() {
                         value: "Get DOM Elements"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 30,
+                        lineNumber: 31,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Search.js",
-                lineNumber: 18,
+                lineNumber: 19,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
                 results: results
             }, void 0, false, {
                 fileName: "src/Search.js",
-                lineNumber: 32,
+                lineNumber: 33,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/Search.js",
-        lineNumber: 17,
+        lineNumber: 18,
         columnNumber: 5
     }, this);
 }

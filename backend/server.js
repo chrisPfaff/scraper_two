@@ -1,7 +1,7 @@
 const fastify = require("fastify")({ logger: true });
 
 fastify.get("/hello", async (request, reply) => {
-  return { hello: "world" };
+  return { hello: request.query };
 });
 
 const start = async () => {
