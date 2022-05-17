@@ -3846,18 +3846,34 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _search = require("./Search");
+var _searchDefault = parcelHelpers.interopDefault(_search);
+var _results = require("./Results");
+var _resultsDefault = parcelHelpers.interopDefault(_results);
 function MyApp() {
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
-            children: "Scraper Two"
-        }, void 0, false, {
-            fileName: "src/App.js",
-            lineNumber: 4,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
+        children: [
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
+                children: "Scraper Two"
+            }, void 0, false, {
+                fileName: "src/App.js",
+                lineNumber: 6,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_searchDefault.default, {}, void 0, false, {
+                fileName: "src/App.js",
+                lineNumber: 7,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {}, void 0, false, {
+                fileName: "src/App.js",
+                lineNumber: 8,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "src/App.js",
-        lineNumber: 3,
+        lineNumber: 5,
         columnNumber: 5
     }, this);
 }
@@ -3871,7 +3887,7 @@ $RefreshReg$(_c, "MyApp");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Search":"7bCrC","./Results":"6w7nu"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -3901,7 +3917,129 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"lOjBx":[function(require,module,exports) {
+},{}],"7bCrC":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5fa3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5fa3.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _results = require("./Results");
+var _resultsDefault = parcelHelpers.interopDefault(_results);
+var _s = $RefreshSig$();
+function Search() {
+    _s();
+    const [search, setSearch] = _react.useState("");
+    const [results, setResults] = _react.useState([]);
+    const searchSubmit = (e)=>{
+        e.preventDefault();
+        setSearch(e.target.value);
+    };
+    const searchDom = (e)=>{
+        e.preventDefault();
+        console.log(search);
+    };
+    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+        children: [
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "search-box",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                        for: "url",
+                        children: "Enter an https://"
+                    }, void 0, false, {
+                        fileName: "src/Search.js",
+                        lineNumber: 19,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                        onChange: searchSubmit,
+                        type: "url",
+                        name: "url",
+                        id: "url",
+                        placeholder: "https://example.com",
+                        pattern: "https://.*",
+                        size: "30",
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/Search.js",
+                        lineNumber: 20,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                        onClick: searchDom,
+                        type: "submit",
+                        value: "Get DOM Elements"
+                    }, void 0, false, {
+                        fileName: "src/Search.js",
+                        lineNumber: 30,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/Search.js",
+                lineNumber: 18,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
+                results: results
+            }, void 0, false, {
+                fileName: "src/Search.js",
+                lineNumber: 32,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/Search.js",
+        lineNumber: 17,
+        columnNumber: 5
+    }, this);
+}
+exports.default = Search;
+_s(Search, "3fJ6m3kQMV96q9niWjXKlYFE18U=");
+_c = Search;
+var _c;
+$RefreshReg$(_c, "Search");
+
+  $parcel$ReactRefreshHelpers$5fa3.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","./Results":"6w7nu"}],"6w7nu":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$36c4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$36c4.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+function Results() {
+    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+        className: "results"
+    }, void 0, false, {
+        fileName: "src/Results.js",
+        lineNumber: 2,
+        columnNumber: 10
+    }, this);
+}
+exports.default = Results;
+_c = Results;
+var _c;
+$RefreshReg$(_c, "Results");
+
+  $parcel$ReactRefreshHelpers$36c4.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lOjBx":[function(require,module,exports) {
 'use strict';
 var m = require('react-dom');
 var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
