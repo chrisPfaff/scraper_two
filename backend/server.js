@@ -1,7 +1,18 @@
 const fastify = require("fastify")({ logger: true });
+const puppeteer = require("puppeteer");
 
 fastify.get("/hello", async (request, reply) => {
-  return { hello: request.query };
+  console.log("request", request.query);
+
+  // (async () => {
+  //   const browser = await puppeteer.launch();
+  //   const page = await browser.newPage();
+  //   console.log(request.query);
+  //   await page.goto(request.query);
+  //   await page.screenshot({ path: "example.png" });
+
+  //   await browser.close();
+  // })();
 });
 
 const start = async () => {
