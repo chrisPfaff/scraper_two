@@ -3934,6 +3934,7 @@ var _s = $RefreshSig$();
 function Search() {
     _s();
     const [search, setSearch] = _react.useState("");
+    const [element, setElement] = _react.useState("");
     const [results, setResults] = _react.useState([]);
     const searchSubmit = (e)=>{
         e.preventDefault();
@@ -3941,8 +3942,11 @@ function Search() {
     };
     const searchDom = (e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:3000/hello?webpage=${search}`);
-        console.log(search);
+        fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`);
+    };
+    const getElements = (e)=>{
+        e.preventDefault();
+        setElement(e.target.value);
     };
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
         children: [
@@ -3950,11 +3954,54 @@ function Search() {
                 className: "search-box",
                 children: [
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                        for: "select",
+                        children: "Pick an HTML Element"
+                    }, void 0, false, {
+                        fileName: "src/Search.js",
+                        lineNumber: 24,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
+                        id: "select",
+                        onChange: getElements,
+                        value: element,
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                value: "select",
+                                children: "Select"
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 26,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                value: "div",
+                                children: "Div"
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 27,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                value: "p",
+                                children: "P"
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 28,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Search.js",
+                        lineNumber: 25,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
                         for: "url",
                         children: "Enter an https://"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 20,
+                        lineNumber: 30,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -3968,7 +4015,7 @@ function Search() {
                         required: true
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 21,
+                        lineNumber: 31,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -3977,31 +4024,31 @@ function Search() {
                         value: "Get DOM Elements"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 31,
+                        lineNumber: 41,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Search.js",
-                lineNumber: 19,
+                lineNumber: 23,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
                 results: results
             }, void 0, false, {
                 fileName: "src/Search.js",
-                lineNumber: 33,
+                lineNumber: 43,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/Search.js",
-        lineNumber: 18,
+        lineNumber: 22,
         columnNumber: 5
     }, this);
 }
 exports.default = Search;
-_s(Search, "3fJ6m3kQMV96q9niWjXKlYFE18U=");
+_s(Search, "3X7WJDLSI7XrcnQOe6RXmJjTr+Y=");
 _c = Search;
 var _c;
 $RefreshReg$(_c, "Search");
