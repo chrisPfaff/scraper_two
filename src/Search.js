@@ -16,7 +16,7 @@ export default function Search() {
       `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
     ).then((res) => {
       res.json().then((element) => {
-        console.log(element.data);
+        setResults(element.data);
       });
     });
   };
@@ -55,7 +55,7 @@ export default function Search() {
         />
         <input onClick={searchDom} type="submit" value="Get DOM Elements" />
       </div>
-      <Results results={results} />
+      {results.length > 0 && <Results results={results} />}
     </div>
   );
 }
