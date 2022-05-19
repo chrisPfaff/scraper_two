@@ -3941,7 +3941,7 @@ function Search() {
     };
     const searchDom = (e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:3000/hello?=webpage${search}`);
+        fetch(`http://127.0.0.1:3000/hello?webpage=${search}`);
         console.log(search);
     };
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
