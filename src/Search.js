@@ -12,7 +12,13 @@ export default function Search() {
   };
   const searchDom = (e) => {
     e.preventDefault();
-    fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`);
+    fetch(
+      `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
+    ).then((res) => {
+      res.json().then((el) => {
+        console.log(el);
+      });
+    });
   };
   const getElements = (e) => {
     e.preventDefault();
