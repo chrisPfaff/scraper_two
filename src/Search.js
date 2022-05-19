@@ -15,8 +15,8 @@ export default function Search() {
     fetch(
       `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
     ).then((res) => {
-      res.json().then((el) => {
-        console.log(el);
+      res.json().then((element) => {
+        console.log(element.data);
       });
     });
   };
@@ -31,7 +31,16 @@ export default function Search() {
         <select id="select" onChange={getElements} value={element}>
           <option value="select">Select</option>
           <option value="div">Div</option>
+          <option value="section">Section</option>
+          <option value="article">Article</option>
+          <option value="a">A</option>
           <option value="p">P</option>
+          <option value="h1">H1</option>
+          <option value="h2">H2</option>
+          <option value="h3">H3</option>
+          <option value="h4">H4</option>
+          <option value="h5">H5</option>
+          <option value="h6">H6</option>
         </select>
         <label for="url">Enter an https://</label>
         <input
