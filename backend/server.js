@@ -5,15 +5,15 @@ fastify.get("/hello", async (request, reply) => {
   let webpage = request.query.webpage;
   let element = request.query.element;
   console.log(webpage, element);
-  // (async () => {
-  //   const browser = await puppeteer.launch();
-  //   const page = await browser.newPage();
-  //   await page.goto(params);
-  //   await page.screenshot({ path: "example.png" });
-
-  //   await browser.close();
-  // })();
-  reply.code(200);
+  (async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(webpage);
+    const elements = await page.$(element);
+    const val = await page.evaluate((el) => el.innerText, elements);
+    reply.send(val).code(200);
+    await browser.close();
+  })();
 });
 
 const start = async () => {
