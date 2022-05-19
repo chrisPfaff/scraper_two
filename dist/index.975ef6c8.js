@@ -3942,7 +3942,11 @@ function Search() {
     };
     const searchDom = (e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`);
+        fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`).then((res)=>{
+            res.json().then((el)=>{
+                console.log(el);
+            });
+        });
     };
     const getElements = (e)=>{
         e.preventDefault();
@@ -3958,7 +3962,7 @@ function Search() {
                         children: "Pick an HTML Element"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 24,
+                        lineNumber: 30,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
@@ -3971,7 +3975,7 @@ function Search() {
                                 children: "Select"
                             }, void 0, false, {
                                 fileName: "src/Search.js",
-                                lineNumber: 26,
+                                lineNumber: 32,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -3979,7 +3983,7 @@ function Search() {
                                 children: "Div"
                             }, void 0, false, {
                                 fileName: "src/Search.js",
-                                lineNumber: 27,
+                                lineNumber: 33,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -3987,13 +3991,13 @@ function Search() {
                                 children: "P"
                             }, void 0, false, {
                                 fileName: "src/Search.js",
-                                lineNumber: 28,
+                                lineNumber: 34,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Search.js",
-                        lineNumber: 25,
+                        lineNumber: 31,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -4001,7 +4005,7 @@ function Search() {
                         children: "Enter an https://"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 30,
+                        lineNumber: 36,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -4015,7 +4019,7 @@ function Search() {
                         required: true
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 31,
+                        lineNumber: 37,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -4024,26 +4028,26 @@ function Search() {
                         value: "Get DOM Elements"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 41,
+                        lineNumber: 47,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Search.js",
-                lineNumber: 23,
+                lineNumber: 29,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
                 results: results
             }, void 0, false, {
                 fileName: "src/Search.js",
-                lineNumber: 43,
+                lineNumber: 49,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/Search.js",
-        lineNumber: 22,
+        lineNumber: 28,
         columnNumber: 5
     }, this);
 }
