@@ -18,7 +18,8 @@ fastify.get("/hello", async (request, reply) => {
     //   await results.push(element.getProperty("innerHTML"));
     // });
     const val = await page.evaluate((el) => el.innerText, elements);
-    reply.send(val).code(200);
+    console.log(val);
+    reply.send({ data: val }).code(200);
     await browser.close();
   })();
 });
