@@ -3,6 +3,7 @@ import Results from "./Results";
 
 export default function Search() {
   const [search, setSearch] = useState("");
+  const [element, setElement] = useState("");
   const [results, setResults] = useState([]);
 
   const searchSubmit = (e) => {
@@ -11,12 +12,21 @@ export default function Search() {
   };
   const searchDom = (e) => {
     e.preventDefault();
-    fetch(`http://127.0.0.1:3000/hello?webpage=${search}`);
-    console.log(search);
+    fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`);
+  };
+  const getElements = (e) => {
+    e.preventDefault();
+    setElement(e.target.value);
   };
   return (
     <div>
       <div className="search-box">
+        <label for="select">Pick an HTML Element</label>
+        <select id="select" onChange={getElements} value={element}>
+          <option value="select">Select</option>
+          <option value="div">Div</option>
+          <option value="p">P</option>
+        </select>
         <label for="url">Enter an https://</label>
         <input
           onChange={searchSubmit}
