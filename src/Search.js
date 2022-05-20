@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Results from "./Results";
 import { SpinnerInfinity } from "spinners-react";
+import "./styles/search.scss";
 
 export default function Search() {
   const [search, setSearch] = useState("");
@@ -32,32 +33,36 @@ export default function Search() {
   return (
     <div>
       <div className="search-box">
-        <label for="select">Pick an HTML Element</label>
-        <select id="select" onChange={getElements} value={element}>
-          <option value="select">Select</option>
-          <option value="div">Div</option>
-          <option value="section">Section</option>
-          <option value="article">Article</option>
-          <option value="a">A</option>
-          <option value="p">P</option>
-          <option value="h1">H1</option>
-          <option value="h2">H2</option>
-          <option value="h3">H3</option>
-          <option value="h4">H4</option>
-          <option value="h5">H5</option>
-          <option value="h6">H6</option>
-        </select>
-        <label for="url">Enter an https://</label>
-        <input
-          onChange={searchSubmit}
-          type="url"
-          name="url"
-          id="url"
-          placeholder="https://example.com"
-          pattern="https://.*"
-          size="30"
-          required
-        />
+        <div className="element-picker">
+          <label for="select">Pick an HTML Element</label>
+          <select id="select" onChange={getElements} value={element}>
+            <option value="select">Select</option>
+            <option value="div">Div</option>
+            <option value="section">Section</option>
+            <option value="article">Article</option>
+            <option value="a">A</option>
+            <option value="p">P</option>
+            <option value="h1">H1</option>
+            <option value="h2">H2</option>
+            <option value="h3">H3</option>
+            <option value="h4">H4</option>
+            <option value="h5">H5</option>
+            <option value="h6">H6</option>
+          </select>
+        </div>
+        <div className="url-picker">
+          <label for="url">Enter an https://</label>
+          <input
+            onChange={searchSubmit}
+            type="url"
+            name="url"
+            id="url"
+            placeholder="https://example.com"
+            pattern="https://.*"
+            size="30"
+            required
+          />
+        </div>
         <input onClick={searchDom} type="submit" value="Get DOM Elements" />
       </div>
       {loading && (
