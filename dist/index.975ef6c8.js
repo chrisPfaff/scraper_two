@@ -3850,30 +3850,39 @@ var _search = require("./Search");
 var _searchDefault = parcelHelpers.interopDefault(_search);
 var _results = require("./Results");
 var _resultsDefault = parcelHelpers.interopDefault(_results);
+var _appScss = require("./styles/app.scss");
 function MyApp() {
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
-                children: "Scraper Two"
-            }, void 0, false, {
-                fileName: "src/App.js",
-                lineNumber: 6,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_searchDefault.default, {}, void 0, false, {
-                fileName: "src/App.js",
-                lineNumber: 7,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {}, void 0, false, {
-                fileName: "src/App.js",
-                lineNumber: 8,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
+        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            className: "container",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
+                    className: "h1-heading",
+                    children: "Scraper Two"
+                }, void 0, false, {
+                    fileName: "src/App.js",
+                    lineNumber: 9,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_searchDefault.default, {}, void 0, false, {
+                    fileName: "src/App.js",
+                    lineNumber: 10,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {}, void 0, false, {
+                    fileName: "src/App.js",
+                    lineNumber: 11,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/App.js",
+            lineNumber: 8,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "src/App.js",
-        lineNumber: 5,
+        lineNumber: 7,
         columnNumber: 5
     }, this);
 }
@@ -3887,7 +3896,7 @@ $RefreshReg$(_c, "MyApp");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Search":"7bCrC","./Results":"6w7nu"}],"gkKU3":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Search":"7bCrC","./Results":"6w7nu","./styles/app.scss":"8YS8j"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -3931,6 +3940,7 @@ var _react = require("react");
 var _results = require("./Results");
 var _resultsDefault = parcelHelpers.interopDefault(_results);
 var _spinnersReact = require("spinners-react");
+var _searchScss = require("./styles/search.scss");
 var _s = $RefreshSig$();
 function Search() {
     _s();
@@ -3962,113 +3972,122 @@ function Search() {
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
                 className: "search-box",
                 children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
-                        for: "select",
-                        children: "Pick an HTML Element"
-                    }, void 0, false, {
-                        fileName: "src/Search.js",
-                        lineNumber: 35,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
-                        id: "select",
-                        onChange: getElements,
-                        value: element1,
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        className: "element-picker",
                         children: [
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "select",
-                                children: "Select"
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                for: "select",
+                                children: "Pick an HTML Element"
                             }, void 0, false, {
                                 fileName: "src/Search.js",
                                 lineNumber: 37,
                                 columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "div",
-                                children: "Div"
-                            }, void 0, false, {
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
+                                id: "select",
+                                onChange: getElements,
+                                value: element1,
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "select",
+                                        children: "Select"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 39,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "div",
+                                        children: "Div"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 40,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "section",
+                                        children: "Section"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 41,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "article",
+                                        children: "Article"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 42,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "a",
+                                        children: "A"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 43,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "p",
+                                        children: "P"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 44,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h1",
+                                        children: "H1"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 45,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h2",
+                                        children: "H2"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 46,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h3",
+                                        children: "H3"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 47,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h4",
+                                        children: "H4"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 48,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h5",
+                                        children: "H5"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 49,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h6",
+                                        children: "H6"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 50,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "src/Search.js",
                                 lineNumber: 38,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "section",
-                                children: "Section"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 39,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "article",
-                                children: "Article"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 40,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "a",
-                                children: "A"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 41,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "p",
-                                children: "P"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 42,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "h1",
-                                children: "H1"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 43,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "h2",
-                                children: "H2"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 44,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "h3",
-                                children: "H3"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 45,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "h4",
-                                children: "H4"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 46,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "h5",
-                                children: "H5"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 47,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                value: "h6",
-                                children: "H6"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 48,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -4077,26 +4096,35 @@ function Search() {
                         lineNumber: 36,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
-                        for: "url",
-                        children: "Enter an https://"
-                    }, void 0, false, {
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        className: "url-picker",
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                for: "url",
+                                children: "Enter an https://"
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 54,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                onChange: searchSubmit,
+                                type: "url",
+                                name: "url",
+                                id: "url",
+                                placeholder: "https://example.com",
+                                pattern: "https://.*",
+                                size: "30",
+                                required: true
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 55,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "src/Search.js",
-                        lineNumber: 50,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
-                        onChange: searchSubmit,
-                        type: "url",
-                        name: "url",
-                        id: "url",
-                        placeholder: "https://example.com",
-                        pattern: "https://.*",
-                        size: "30",
-                        required: true
-                    }, void 0, false, {
-                        fileName: "src/Search.js",
-                        lineNumber: 51,
+                        lineNumber: 53,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -4105,13 +4133,13 @@ function Search() {
                         value: "Get DOM Elements"
                     }, void 0, false, {
                         fileName: "src/Search.js",
-                        lineNumber: 61,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Search.js",
-                lineNumber: 34,
+                lineNumber: 35,
                 columnNumber: 7
             }, this),
             loading && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -4124,25 +4152,25 @@ function Search() {
                     secondaryColor: "rgba(163, 172, 57, 0.44)"
                 }, void 0, false, {
                     fileName: "src/Search.js",
-                    lineNumber: 65,
+                    lineNumber: 70,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "src/Search.js",
-                lineNumber: 64,
+                lineNumber: 69,
                 columnNumber: 9
             }, this),
             results.length > 0 && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
                 results: results
             }, void 0, false, {
                 fileName: "src/Search.js",
-                lineNumber: 74,
+                lineNumber: 79,
                 columnNumber: 30
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/Search.js",
-        lineNumber: 33,
+        lineNumber: 34,
         columnNumber: 5
     }, this);
 }
@@ -4157,7 +4185,7 @@ $RefreshReg$(_c, "Search");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","./Results":"6w7nu","spinners-react":"1amxM"}],"6w7nu":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","./Results":"6w7nu","spinners-react":"1amxM","./styles/search.scss":"6zWfC"}],"6w7nu":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$36c4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -4448,7 +4476,7 @@ var Component = function(_a) {
 Component.defaultProps = _styleInjectEsFc9E633EJs.a;
 var SpinnerInfinity = _withSharedPropsA1728349Js.w(Component);
 
-},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lOjBx":[function(require,module,exports) {
+},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6zWfC":[function() {},{}],"8YS8j":[function() {},{}],"lOjBx":[function(require,module,exports) {
 'use strict';
 var m = require('react-dom');
 var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
