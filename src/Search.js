@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Results from "./Results";
+import { SpinnerCircular } from "spinners-react";
 
 export default function Search() {
   const [search, setSearch] = useState("");
   const [element, setElement] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -12,11 +14,13 @@ export default function Search() {
   };
   const searchDom = (e) => {
     e.preventDefault();
+    setLoading(true);
     fetch(
       `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
     ).then((res) => {
       res.json().then((element) => {
         setResults(element.data);
+        setLoading(false);
       });
     });
   };
@@ -55,6 +59,11 @@ export default function Search() {
         />
         <input onClick={searchDom} type="submit" value="Get DOM Elements" />
       </div>
+      {loading && (
+        <div className="spinner-box">
+          <SpinnerCircular enabled={true} />
+        </div>
+      )}
       {results.length > 0 && <Results results={results} />}
     </div>
   );
