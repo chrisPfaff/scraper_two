@@ -1,5 +1,6 @@
 export default function Results(data) {
   data = data.results;
+  console.log(data);
   const render = () => {
     if (data !== undefined) {
       return (

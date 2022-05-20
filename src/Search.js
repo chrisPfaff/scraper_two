@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Results from "./Results";
-import { SpinnerCircular } from "spinners-react";
+import { SpinnerInfinity } from "spinners-react";
 
 export default function Search() {
   const [search, setSearch] = useState("");
@@ -19,6 +19,7 @@ export default function Search() {
       `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
     ).then((res) => {
       res.json().then((element) => {
+        console.log(element.data);
         setResults(element.data);
         setLoading(false);
       });
@@ -61,7 +62,13 @@ export default function Search() {
       </div>
       {loading && (
         <div className="spinner-box">
-          <SpinnerCircular enabled={true} />
+          <SpinnerInfinity
+            size={74}
+            thickness={153}
+            speed={68}
+            color="rgba(63, 57, 172, 1)"
+            secondaryColor="rgba(163, 172, 57, 0.44)"
+          />
         </div>
       )}
       {results.length > 0 && <Results results={results} />}

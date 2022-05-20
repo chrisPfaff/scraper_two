@@ -13,17 +13,16 @@ fastify.get("/hello", async (request, reply) => {
     const page = await browser.newPage();
     await page.goto(webpage);
     const elements = await page.$$(element);
+    const results = [];
     for (let i = 0; i < elements.length; i++) {
       const htmlElement = elements[i];
       const textElement = await page.evaluate(
         (htmlElement) => htmlElement.textContent,
         htmlElement
       );
-      console.log(textElement);
+      results.push(textElement);
     }
-
-    //const val = await page.evaluate((el) => el.innerText, elements);
-    //reply.send({ data: val }).code(200);
+    reply.send({ data: results }).code(200);
     await browser.close();
   })();
 });
