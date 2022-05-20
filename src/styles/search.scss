@@ -1,0 +1,9 @@
+@import "mixin.scss";
+
+.search-box {
+  @include desktop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}

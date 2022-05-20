@@ -1,0 +1,9 @@
+@import "mixin.scss";
+
+.h1-heading {
+  text-align: center;
+  @include desktop {
+    padding: 40px 0;
+    font-size: 46px;
+  }
+}

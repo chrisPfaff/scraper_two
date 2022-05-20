@@ -1,0 +1,69 @@
+*, *:before, *:after{
+  box-sizing: border-box;
+}
+
+html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: none;
+}
+
+footer, header, nav, section, main{
+  display: block;
+}
+
+body{
+  line-height: 1;
+  color: #fff;
+  background: rgb(253,187,45);
+  background: linear-gradient(0deg, rgba(60,145,149,1) 12%, rgba(59,122,56,1) 49%, rgba(35,77,60,1) 70%, rgba(17,44,45,1) 87%) no-repeat;
+  height: 100vh;
+}
+
+ol, ul{
+  list-style: none;
+}
+
+blockquote, q{
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after{
+  content: '';
+  content: none;
+}
+
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input{
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.container {
+  @media screen and (min-width: 360px) {
+    padding: 0px 16px;
+    margin: 0 auto;
+  }
+  @media screen and (min-width: 768px) {
+    max-width: 768px;
+    padding: 0px 24px;
+  }
+  @media screen and (min-width: 992px) {
+    max-width: 970px;
+  }
+   @media screen and (min-width: 1200px) {
+    width: 100%;
+    max-width: 1464px;
+    padding: 0px 32px;
+   }
+}
