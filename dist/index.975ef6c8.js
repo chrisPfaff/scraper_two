@@ -1023,7 +1023,7 @@ root.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_appDefault.default, {}, void 0,
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./App":"2kQhy","react-dom/client":"lOjBx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-dom/client":"lOjBx","./App":"2kQhy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-dev-runtime.development.js');
 
@@ -3716,767 +3716,7 @@ module.exports = require('./cjs/react.development.js');
     /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
 })();
 
-},{}],"km3Ru":[function(require,module,exports) {
-"use strict";
-var Refresh = require('react-refresh/runtime');
-function debounce(func, delay) {
-    var args1;
-    var timeout = undefined;
-    return function(args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(function() {
-            timeout = undefined;
-            func.call(null, args);
-        }, delay);
-    };
-}
-var enqueueUpdate = debounce(function() {
-    Refresh.performReactRefresh();
-}, 30); // Everthing below is either adapted or copied from
-// https://github.com/facebook/metro/blob/61de16bd1edd7e738dd0311c89555a644023ab2d/packages/metro/src/lib/polyfills/require.js
-// MIT License - Copyright (c) Facebook, Inc. and its affiliates.
-module.exports.prelude = function(module) {
-    window.$RefreshReg$ = function(type, id) {
-        Refresh.register(type, module.id + ' ' + id);
-    };
-    window.$RefreshSig$ = Refresh.createSignatureFunctionForTransform;
-};
-module.exports.postlude = function(module) {
-    if (isReactRefreshBoundary(module.exports)) {
-        registerExportsForReactRefresh(module);
-        if (module.hot) {
-            module.hot.dispose(function(data) {
-                if (Refresh.hasUnrecoverableErrors()) window.location.reload();
-                data.prevExports = module.exports;
-            });
-            module.hot.accept(function(getParents) {
-                var prevExports = module.hot.data.prevExports;
-                var nextExports = module.exports; // Since we just executed the code for it, it's possible
-                // that the new exports make it ineligible for being a boundary.
-                var isNoLongerABoundary = !isReactRefreshBoundary(nextExports); // It can also become ineligible if its exports are incompatible
-                // with the previous exports.
-                // For example, if you add/remove/change exports, we'll want
-                // to re-execute the importing modules, and force those components
-                // to re-render. Similarly, if you convert a class component
-                // to a function, we want to invalidate the boundary.
-                var didInvalidate = shouldInvalidateReactRefreshBoundary(prevExports, nextExports);
-                if (isNoLongerABoundary || didInvalidate) {
-                    // We'll be conservative. The only case in which we won't do a full
-                    // reload is if all parent modules are also refresh boundaries.
-                    // In that case we'll add them to the current queue.
-                    var parents = getParents();
-                    if (parents.length === 0) {
-                        // Looks like we bubbled to the root. Can't recover from that.
-                        window.location.reload();
-                        return;
-                    }
-                    return parents;
-                }
-                enqueueUpdate();
-            });
-        }
-    }
-};
-function isReactRefreshBoundary(exports) {
-    if (Refresh.isLikelyComponentType(exports)) return true;
-    if (exports == null || typeof exports !== 'object') // Exit if we can't iterate over exports.
-    return false;
-    var hasExports = false;
-    var areAllExportsComponents = true;
-    let isESM = '__esModule' in exports;
-    for(var key in exports){
-        hasExports = true;
-        if (key === '__esModule') continue;
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) // Don't invoke getters for CJS as they may have side effects.
-        return false;
-        var exportValue = exports[key];
-        if (!Refresh.isLikelyComponentType(exportValue)) areAllExportsComponents = false;
-    }
-    return hasExports && areAllExportsComponents;
-}
-function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
-    var prevSignature = getRefreshBoundarySignature(prevExports);
-    var nextSignature = getRefreshBoundarySignature(nextExports);
-    if (prevSignature.length !== nextSignature.length) return true;
-    for(var i = 0; i < nextSignature.length; i++){
-        if (prevSignature[i] !== nextSignature[i]) return true;
-    }
-    return false;
-} // When this signature changes, it's unsafe to stop at this refresh boundary.
-function getRefreshBoundarySignature(exports) {
-    var signature = [];
-    signature.push(Refresh.getFamilyByType(exports));
-    if (exports == null || typeof exports !== 'object') // Exit if we can't iterate over exports.
-    // (This is important for legacy environments.)
-    return signature;
-    let isESM = '__esModule' in exports;
-    for(var key in exports){
-        if (key === '__esModule') continue;
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) continue;
-        var exportValue = exports[key];
-        signature.push(key);
-        signature.push(Refresh.getFamilyByType(exportValue));
-    }
-    return signature;
-}
-function registerExportsForReactRefresh(module) {
-    var exports = module.exports, id = module.id;
-    Refresh.register(exports, id + ' %exports%');
-    if (exports == null || typeof exports !== 'object') // Exit if we can't iterate over exports.
-    // (This is important for legacy environments.)
-    return;
-    let isESM = '__esModule' in exports;
-    for(var key in exports){
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) continue;
-        var exportValue = exports[key];
-        Refresh.register(exportValue, id + ' %exports% ' + key);
-    }
-}
-
-},{"react-refresh/runtime":"786KC"}],"2kQhy":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$f00f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$f00f.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _search = require("./Search");
-var _searchDefault = parcelHelpers.interopDefault(_search);
-var _results = require("./Results");
-var _resultsDefault = parcelHelpers.interopDefault(_results);
-var _appScss = require("./styles/app.scss");
-function MyApp() {
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-            className: "container",
-            children: [
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
-                    className: "h1-heading",
-                    children: "Scraper Two"
-                }, void 0, false, {
-                    fileName: "src/App.js",
-                    lineNumber: 9,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_searchDefault.default, {}, void 0, false, {
-                    fileName: "src/App.js",
-                    lineNumber: 10,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {}, void 0, false, {
-                    fileName: "src/App.js",
-                    lineNumber: 11,
-                    columnNumber: 9
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "src/App.js",
-            lineNumber: 8,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
-        fileName: "src/App.js",
-        lineNumber: 7,
-        columnNumber: 5
-    }, this);
-}
-exports.default = MyApp;
-_c = MyApp;
-var _c;
-$RefreshReg$(_c, "MyApp");
-
-  $parcel$ReactRefreshHelpers$f00f.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Search":"7bCrC","./Results":"6w7nu","./styles/app.scss":"8YS8j"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"7bCrC":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$5fa3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$5fa3.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _react = require("react");
-var _results = require("./Results");
-var _resultsDefault = parcelHelpers.interopDefault(_results);
-var _spinnersReact = require("spinners-react");
-var _searchScss = require("./styles/search.scss");
-var _s = $RefreshSig$();
-function Search() {
-    _s();
-    const [search, setSearch] = _react.useState("");
-    const [element1, setElement] = _react.useState("");
-    const [results, setResults] = _react.useState([]);
-    const [loading, setLoading] = _react.useState(false);
-    const searchSubmit = (e)=>{
-        e.preventDefault();
-        setSearch(e.target.value);
-    };
-    const searchDom = (e)=>{
-        e.preventDefault();
-        setLoading(true);
-        fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element1}`).then((res)=>{
-            res.json().then((element)=>{
-                console.log(element.data);
-                setResults(element.data);
-                setLoading(false);
-            });
-        });
-    };
-    const getElements = (e)=>{
-        e.preventDefault();
-        setElement(e.target.value);
-    };
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                className: "search-box",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                        className: "element-picker",
-                        children: [
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
-                                for: "select",
-                                children: "Pick an HTML Element"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 37,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
-                                id: "select",
-                                onChange: getElements,
-                                value: element1,
-                                children: [
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "select",
-                                        children: "Select"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 39,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "div",
-                                        children: "Div"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 40,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "section",
-                                        children: "Section"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 41,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "article",
-                                        children: "Article"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 42,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "a",
-                                        children: "A"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 43,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "p",
-                                        children: "P"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 44,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "h1",
-                                        children: "H1"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 45,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "h2",
-                                        children: "H2"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 46,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "h3",
-                                        children: "H3"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 47,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "h4",
-                                        children: "H4"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 48,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "h5",
-                                        children: "H5"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 49,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                        value: "h6",
-                                        children: "H6"
-                                    }, void 0, false, {
-                                        fileName: "src/Search.js",
-                                        lineNumber: 50,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "src/Search.js",
-                                lineNumber: 38,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Search.js",
-                        lineNumber: 36,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                        className: "url-picker",
-                        children: [
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
-                                for: "url",
-                                children: "Enter an https://"
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 54,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
-                                onChange: searchSubmit,
-                                type: "url",
-                                name: "url",
-                                id: "url",
-                                placeholder: "https://example.com",
-                                pattern: "https://.*",
-                                size: "30",
-                                required: true
-                            }, void 0, false, {
-                                fileName: "src/Search.js",
-                                lineNumber: 55,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Search.js",
-                        lineNumber: 53,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
-                        onClick: searchDom,
-                        type: "submit",
-                        value: "Get DOM Elements"
-                    }, void 0, false, {
-                        fileName: "src/Search.js",
-                        lineNumber: 66,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "src/Search.js",
-                lineNumber: 35,
-                columnNumber: 7
-            }, this),
-            loading && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                className: "spinner-box",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_spinnersReact.SpinnerInfinity, {
-                    size: 74,
-                    thickness: 153,
-                    speed: 68,
-                    color: "rgba(63, 57, 172, 1)",
-                    secondaryColor: "rgba(163, 172, 57, 0.44)"
-                }, void 0, false, {
-                    fileName: "src/Search.js",
-                    lineNumber: 70,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
-                fileName: "src/Search.js",
-                lineNumber: 69,
-                columnNumber: 9
-            }, this),
-            results.length > 0 && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
-                results: results
-            }, void 0, false, {
-                fileName: "src/Search.js",
-                lineNumber: 79,
-                columnNumber: 30
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "src/Search.js",
-        lineNumber: 34,
-        columnNumber: 5
-    }, this);
-}
-exports.default = Search;
-_s(Search, "HIPx9jM37WgOEUi0tlA340xZxaQ=");
-_c = Search;
-var _c;
-$RefreshReg$(_c, "Search");
-
-  $parcel$ReactRefreshHelpers$5fa3.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","./Results":"6w7nu","spinners-react":"1amxM","./styles/search.scss":"6zWfC"}],"6w7nu":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$36c4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$36c4.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-function Results(data) {
-    data = data.results;
-    console.log(data);
-    const render = ()=>{
-        if (data !== undefined) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-            className: "results",
-            children: [
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h2", {
-                    children: "Results"
-                }, void 0, false, {
-                    fileName: "src/Results.js",
-                    lineNumber: 8,
-                    columnNumber: 11
-                }, this),
-                data.map((result)=>{
-                    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
-                        children: result
-                    }, void 0, false, {
-                        fileName: "src/Results.js",
-                        lineNumber: 10,
-                        columnNumber: 20
-                    }, this);
-                })
-            ]
-        }, void 0, true, {
-            fileName: "src/Results.js",
-            lineNumber: 7,
-            columnNumber: 9
-        }, this);
-    };
-    return render();
-}
-exports.default = Results;
-_c = Results;
-var _c;
-$RefreshReg$(_c, "Results");
-
-  $parcel$ReactRefreshHelpers$36c4.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"1amxM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SpinnerCircular", ()=>_spinnerCircularJs.SpinnerCircular
-);
-parcelHelpers.export(exports, "SpinnerCircularFixed", ()=>_spinnerCircularFixedJs.SpinnerCircularFixed
-);
-parcelHelpers.export(exports, "SpinnerCircularSplit", ()=>_spinnerCircularSplitJs.SpinnerCircularSplit
-);
-parcelHelpers.export(exports, "SpinnerInfinity", ()=>_spinnerInfinityJs.SpinnerInfinity
-);
-parcelHelpers.export(exports, "Component", ()=>_spinnerDottedJs.Component
-);
-parcelHelpers.export(exports, "SpinnerDotted", ()=>_spinnerDottedJs.SpinnerDotted
-);
-parcelHelpers.export(exports, "SpinnerRound", ()=>_spinnerRoundJs.SpinnerRound
-);
-parcelHelpers.export(exports, "SpinnerRoundOutlined", ()=>_spinnerRoundOutlinedJs.SpinnerRoundOutlined
-);
-parcelHelpers.export(exports, "SpinnerRoundFilled", ()=>_spinnerRoundFilledJs.SpinnerRoundFilled
-);
-parcelHelpers.export(exports, "SpinnerDiamond", ()=>_spinnerDiamondJs.SpinnerDiamond
-);
-parcelHelpers.export(exports, "SpinnerRomb", ()=>_spinnerDiamondJs.SpinnerRomb
-);
-var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
-var _react = require("react");
-var _styleInjectEsFc9E633EJs = require("./style-inject.es-fc9e633e.js");
-var _spinnerCircularJs = require("./SpinnerCircular.js");
-var _spinnerCircularFixedJs = require("./SpinnerCircularFixed.js");
-var _spinnerCircularSplitJs = require("./SpinnerCircularSplit.js");
-var _spinnerInfinityJs = require("./SpinnerInfinity.js");
-var _spinnerDottedJs = require("./SpinnerDotted.js");
-var _spinnerRoundJs = require("./SpinnerRound.js");
-var _spinnerRoundOutlinedJs = require("./SpinnerRoundOutlined.js");
-var _spinnerRoundFilledJs = require("./SpinnerRoundFilled.js");
-var _spinnerDiamondJs = require("./SpinnerDiamond.js");
-
-},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","./SpinnerCircular.js":"4kzyz","./SpinnerCircularFixed.js":false,"./SpinnerCircularSplit.js":false,"./SpinnerInfinity.js":"fBRap","./SpinnerDotted.js":false,"./SpinnerRound.js":false,"./SpinnerRoundOutlined.js":false,"./SpinnerRoundFilled.js":false,"./SpinnerDiamond.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8F2e2":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "_", ()=>__rest
-);
-parcelHelpers.export(exports, "a", ()=>__assign
-);
-parcelHelpers.export(exports, "w", ()=>withSharedProps
-);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */ var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for(var s, i = 1, n = arguments.length; i < n; i++){
-            s = arguments[i];
-            for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-function __rest(s, e) {
-    var t = {};
-    for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function") {
-        for(var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++)if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-    }
-    return t;
-}
-var defaultProps = {
-    color: '#38ad48',
-    enabled: true,
-    size: 50,
-    style: {}
-};
-var normalizeSize = function(size) {
-    return parseFloat(size.toString()).toString() === size.toString() ? size + "px" : size.toString();
-};
-var withSharedProps = function(Component) {
-    var Wrapper = function(props) {
-        var color = props.color, enabled = props.enabled, size = props.size, style = props.style, otherProps = __rest(props, [
-            "color",
-            "enabled",
-            "size",
-            "style"
-        ]);
-        var componentProps = __assign(__assign({}, otherProps), {
-            style: __assign({
-                color: color,
-                overflow: 'visible',
-                width: normalizeSize(size)
-            }, style)
-        });
-        if (!enabled) return null;
-        return _reactDefault.default.createElement(Component, __assign({}, componentProps));
-    };
-    Wrapper.defaultProps = defaultProps;
-    return Wrapper;
-};
-
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"b2fBk":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "a", ()=>secondaryColorDefaultProps
-);
-parcelHelpers.export(exports, "d", ()=>defaultProps
-);
-parcelHelpers.export(exports, "s", ()=>styleInject
-);
-var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
-var defaultProps = {
-    speed: 100,
-    still: false,
-    thickness: 100
-};
-var secondaryColorDefaultProps = _withSharedPropsA1728349Js.a(_withSharedPropsA1728349Js.a({}, defaultProps), {
-    secondaryColor: 'rgba(0,0,0,0.44)'
-});
-function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
-    if (!css || typeof document === 'undefined') return;
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    if (insertAt === 'top') {
-        if (head.firstChild) head.insertBefore(style, head.firstChild);
-        else head.appendChild(style);
-    } else head.appendChild(style);
-    if (style.styleSheet) style.styleSheet.cssText = css;
-    else style.appendChild(document.createTextNode(css));
-}
-
-},{"./withSharedProps-a1728349.js":"8F2e2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4kzyz":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SpinnerCircular", ()=>SpinnerCircular
-);
-var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _styleInjectEsFc9E633EJs = require("./style-inject.es-fc9e633e.js");
-var css_248z = "@keyframes spinners-react-circular{0%{stroke-dashoffset:306}50%{stroke-dasharray:40,134}to{stroke-dasharray:1,174;stroke-dashoffset:132}}";
-_styleInjectEsFc9E633EJs.s(css_248z);
-var Component = function(_a) {
-    var secondaryColor = _a.secondaryColor, speed = _a.speed, still = _a.still, thickness = _a.thickness, svgProps = _withSharedPropsA1728349Js._(_a, [
-        "secondaryColor",
-        "speed",
-        "still",
-        "thickness"
-    ]);
-    var strokeWidth = 4 * (thickness / 100);
-    var circleStyle = !still ? {
-        animation: "spinners-react-circular " + 140 / speed + "s linear infinite"
-    } : {};
-    return _reactDefault.default.createElement("svg", _withSharedPropsA1728349Js.a({
-        fill: "none"
-    }, svgProps, {
-        viewBox: "0 0 66 66"
-    }), _reactDefault.default.createElement("circle", {
-        cx: "33",
-        cy: "33",
-        fill: "none",
-        r: "28",
-        stroke: secondaryColor,
-        strokeWidth: strokeWidth
-    }), _reactDefault.default.createElement("circle", {
-        cx: "33",
-        cy: "33",
-        fill: "none",
-        r: "28",
-        stroke: "currentColor",
-        strokeDasharray: "1, 174",
-        strokeDashoffset: "306",
-        strokeLinecap: "round",
-        strokeWidth: strokeWidth,
-        style: circleStyle
-    }));
-};
-Component.defaultProps = _styleInjectEsFc9E633EJs.a;
-var SpinnerCircular = _withSharedPropsA1728349Js.w(Component);
-
-},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fBRap":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SpinnerInfinity", ()=>SpinnerInfinity
-);
-var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _styleInjectEsFc9E633EJs = require("./style-inject.es-fc9e633e.js");
-var css_248z = "@keyframes spinners-react-infinity{0%{stroke-dasharray:1,347;stroke-dashoffset:75}25%,75%{stroke-dasharray:17,330}50%{stroke-dasharray:1,347}to{stroke-dasharray:1,347;stroke-dashoffset:423}}";
-_styleInjectEsFc9E633EJs.s(css_248z);
-var Component = function(_a) {
-    var secondaryColor = _a.secondaryColor, speed = _a.speed, still = _a.still, thickness = _a.thickness, svgProps = _withSharedPropsA1728349Js._(_a, [
-        "secondaryColor",
-        "speed",
-        "still",
-        "thickness"
-    ]);
-    var strokeWidth = 7 * (thickness / 100);
-    var dashStyle = !still ? {
-        animation: "spinners-react-infinity " + 140 / speed + "s linear infinite"
-    } : {};
-    return _reactDefault.default.createElement("svg", _withSharedPropsA1728349Js.a({
-        fill: "none",
-        viewBox: "0 0 131 55"
-    }, svgProps), _reactDefault.default.createElement("defs", null, _reactDefault.default.createElement("path", {
-        d: "M46.57 45.5138C36.346 55.4954 19.8919 55.4954 9.66794 45.5138C-0.55598 35.5321 -0.55598 19.4678 9.66794 9.48624C19.8919 -0.495412 36.346 -0.495412 46.57 9.48624L84.4303 45.5138C94.6543 55.4954 111.108 55.4954 121.332 45.5138C131.556 35.5321 131.556 19.4678 121.332 9.48624C111.108 -0.495412 94.6543 -0.495412 84.4303 9.48624L46.57 45.5138Z",
-        id: "spinners-react-infinity-path"
-    })), _reactDefault.default.createElement("use", {
-        stroke: secondaryColor,
-        strokeWidth: strokeWidth,
-        xlinkHref: "#spinners-react-infinity-path"
-    }), _reactDefault.default.createElement("use", {
-        fill: "none",
-        stroke: "currentColor",
-        strokeDasharray: "1, 347",
-        strokeDashoffset: "75",
-        strokeLinecap: "round",
-        strokeWidth: strokeWidth,
-        style: dashStyle,
-        xlinkHref: "#spinners-react-infinity-path"
-    }));
-};
-Component.defaultProps = _styleInjectEsFc9E633EJs.a;
-var SpinnerInfinity = _withSharedPropsA1728349Js.w(Component);
-
-},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6zWfC":[function() {},{}],"8YS8j":[function() {},{}],"lOjBx":[function(require,module,exports) {
+},{}],"lOjBx":[function(require,module,exports) {
 'use strict';
 var m = require('react-dom');
 var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
@@ -25849,6 +25089,717 @@ module.exports = require('./cjs/scheduler.development.js');
     /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
 })();
 
-},{}]},["kn9T2","7fmqN","8lqZg"], "8lqZg", "parcelRequire6ea0")
+},{}],"2kQhy":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f00f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f00f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _search = require("./Search");
+var _searchDefault = parcelHelpers.interopDefault(_search);
+var _results = require("./Results");
+var _resultsDefault = parcelHelpers.interopDefault(_results);
+var _appScss = require("./styles/app.scss");
+function MyApp() {
+    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("main", {
+        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            className: "container",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
+                    className: "h1-heading",
+                    children: "Scraper Two"
+                }, void 0, false, {
+                    fileName: "src/App.js",
+                    lineNumber: 9,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_searchDefault.default, {}, void 0, false, {
+                    fileName: "src/App.js",
+                    lineNumber: 10,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {}, void 0, false, {
+                    fileName: "src/App.js",
+                    lineNumber: 11,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/App.js",
+            lineNumber: 8,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "src/App.js",
+        lineNumber: 7,
+        columnNumber: 5
+    }, this);
+}
+exports.default = MyApp;
+_c = MyApp;
+var _c;
+$RefreshReg$(_c, "MyApp");
+
+  $parcel$ReactRefreshHelpers$f00f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","./Search":"7bCrC","./Results":"6w7nu","./styles/app.scss":"8YS8j","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7bCrC":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5fa3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5fa3.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _results = require("./Results");
+var _resultsDefault = parcelHelpers.interopDefault(_results);
+var _spinnersReact = require("spinners-react");
+var _searchScss = require("./styles/search.scss");
+var _s = $RefreshSig$();
+function Search() {
+    _s();
+    const [search, setSearch] = _react.useState("");
+    const [element1, setElement] = _react.useState("");
+    const [results, setResults] = _react.useState([]);
+    const [loading, setLoading] = _react.useState(false);
+    const searchSubmit = (e)=>{
+        e.preventDefault();
+        setSearch(e.target.value);
+    };
+    const searchDom = (e)=>{
+        e.preventDefault();
+        setLoading(true);
+        fetch(`http://127.0.0.1:3000/hello?webpage=${search}&element=${element1}`).then((res)=>{
+            res.json().then((element)=>{
+                console.log(element.data);
+                setResults(element.data);
+                setLoading(false);
+            });
+        });
+    };
+    const getElements = (e)=>{
+        e.preventDefault();
+        setElement(e.target.value);
+    };
+    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+        children: [
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "search-box",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        className: "element-picker",
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                for: "select",
+                                children: "Pick an HTML Element"
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 37,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
+                                id: "select",
+                                onChange: getElements,
+                                value: element1,
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "select",
+                                        children: "Select"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 39,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "div",
+                                        children: "Div"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 40,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "section",
+                                        children: "Section"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 41,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "article",
+                                        children: "Article"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 42,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "a",
+                                        children: "A"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 43,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "p",
+                                        children: "P"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 44,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h1",
+                                        children: "H1"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 45,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h2",
+                                        children: "H2"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 46,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h3",
+                                        children: "H3"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 47,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h4",
+                                        children: "H4"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 48,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h5",
+                                        children: "H5"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 49,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        value: "h6",
+                                        children: "H6"
+                                    }, void 0, false, {
+                                        fileName: "src/Search.js",
+                                        lineNumber: 50,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/Search.js",
+                                lineNumber: 38,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Search.js",
+                        lineNumber: 36,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        className: "url-picker",
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                for: "url",
+                                children: "Enter an https://"
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 54,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                onChange: searchSubmit,
+                                type: "url",
+                                name: "url",
+                                id: "url",
+                                placeholder: "https://example.com",
+                                pattern: "https://.*",
+                                size: "30",
+                                required: true
+                            }, void 0, false, {
+                                fileName: "src/Search.js",
+                                lineNumber: 55,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Search.js",
+                        lineNumber: 53,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                        onClick: searchDom,
+                        type: "submit",
+                        value: "Get DOM Elements"
+                    }, void 0, false, {
+                        fileName: "src/Search.js",
+                        lineNumber: 66,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/Search.js",
+                lineNumber: 35,
+                columnNumber: 7
+            }, this),
+            loading && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "spinner-box",
+                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_spinnersReact.SpinnerInfinity, {
+                    size: 74,
+                    thickness: 153,
+                    speed: 68,
+                    color: "rgba(63, 57, 172, 1)",
+                    secondaryColor: "rgba(163, 172, 57, 0.44)"
+                }, void 0, false, {
+                    fileName: "src/Search.js",
+                    lineNumber: 70,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "src/Search.js",
+                lineNumber: 69,
+                columnNumber: 9
+            }, this),
+            results.length > 0 && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
+                results: results
+            }, void 0, false, {
+                fileName: "src/Search.js",
+                lineNumber: 79,
+                columnNumber: 30
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/Search.js",
+        lineNumber: 34,
+        columnNumber: 5
+    }, this);
+}
+exports.default = Search;
+_s(Search, "HIPx9jM37WgOEUi0tlA340xZxaQ=");
+_c = Search;
+var _c;
+$RefreshReg$(_c, "Search");
+
+  $parcel$ReactRefreshHelpers$5fa3.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./Results":"6w7nu","spinners-react":"1amxM","./styles/search.scss":"6zWfC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"6w7nu":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$36c4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$36c4.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _resultsScss = require("./styles/results.scss");
+function Results(data) {
+    data = data.results;
+    const render = ()=>{
+        if (data !== undefined) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            className: "results",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h2", {
+                    children: "Results"
+                }, void 0, false, {
+                    fileName: "src/Results.js",
+                    lineNumber: 9,
+                    columnNumber: 11
+                }, this),
+                data.map((result)=>{
+                    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                        children: result
+                    }, void 0, false, {
+                        fileName: "src/Results.js",
+                        lineNumber: 11,
+                        columnNumber: 20
+                    }, this);
+                })
+            ]
+        }, void 0, true, {
+            fileName: "src/Results.js",
+            lineNumber: 8,
+            columnNumber: 9
+        }, this);
+    };
+    return render();
+}
+exports.default = Results;
+_c = Results;
+var _c;
+$RefreshReg$(_c, "Results");
+
+  $parcel$ReactRefreshHelpers$36c4.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./styles/results.scss":"digkY"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"km3Ru":[function(require,module,exports) {
+"use strict";
+var Refresh = require('react-refresh/runtime');
+function debounce(func, delay) {
+    var args1;
+    var timeout = undefined;
+    return function(args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            timeout = undefined;
+            func.call(null, args);
+        }, delay);
+    };
+}
+var enqueueUpdate = debounce(function() {
+    Refresh.performReactRefresh();
+}, 30); // Everthing below is either adapted or copied from
+// https://github.com/facebook/metro/blob/61de16bd1edd7e738dd0311c89555a644023ab2d/packages/metro/src/lib/polyfills/require.js
+// MIT License - Copyright (c) Facebook, Inc. and its affiliates.
+module.exports.prelude = function(module) {
+    window.$RefreshReg$ = function(type, id) {
+        Refresh.register(type, module.id + ' ' + id);
+    };
+    window.$RefreshSig$ = Refresh.createSignatureFunctionForTransform;
+};
+module.exports.postlude = function(module) {
+    if (isReactRefreshBoundary(module.exports)) {
+        registerExportsForReactRefresh(module);
+        if (module.hot) {
+            module.hot.dispose(function(data) {
+                if (Refresh.hasUnrecoverableErrors()) window.location.reload();
+                data.prevExports = module.exports;
+            });
+            module.hot.accept(function(getParents) {
+                var prevExports = module.hot.data.prevExports;
+                var nextExports = module.exports; // Since we just executed the code for it, it's possible
+                // that the new exports make it ineligible for being a boundary.
+                var isNoLongerABoundary = !isReactRefreshBoundary(nextExports); // It can also become ineligible if its exports are incompatible
+                // with the previous exports.
+                // For example, if you add/remove/change exports, we'll want
+                // to re-execute the importing modules, and force those components
+                // to re-render. Similarly, if you convert a class component
+                // to a function, we want to invalidate the boundary.
+                var didInvalidate = shouldInvalidateReactRefreshBoundary(prevExports, nextExports);
+                if (isNoLongerABoundary || didInvalidate) {
+                    // We'll be conservative. The only case in which we won't do a full
+                    // reload is if all parent modules are also refresh boundaries.
+                    // In that case we'll add them to the current queue.
+                    var parents = getParents();
+                    if (parents.length === 0) {
+                        // Looks like we bubbled to the root. Can't recover from that.
+                        window.location.reload();
+                        return;
+                    }
+                    return parents;
+                }
+                enqueueUpdate();
+            });
+        }
+    }
+};
+function isReactRefreshBoundary(exports) {
+    if (Refresh.isLikelyComponentType(exports)) return true;
+    if (exports == null || typeof exports !== 'object') // Exit if we can't iterate over exports.
+    return false;
+    var hasExports = false;
+    var areAllExportsComponents = true;
+    let isESM = '__esModule' in exports;
+    for(var key in exports){
+        hasExports = true;
+        if (key === '__esModule') continue;
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) // Don't invoke getters for CJS as they may have side effects.
+        return false;
+        var exportValue = exports[key];
+        if (!Refresh.isLikelyComponentType(exportValue)) areAllExportsComponents = false;
+    }
+    return hasExports && areAllExportsComponents;
+}
+function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
+    var prevSignature = getRefreshBoundarySignature(prevExports);
+    var nextSignature = getRefreshBoundarySignature(nextExports);
+    if (prevSignature.length !== nextSignature.length) return true;
+    for(var i = 0; i < nextSignature.length; i++){
+        if (prevSignature[i] !== nextSignature[i]) return true;
+    }
+    return false;
+} // When this signature changes, it's unsafe to stop at this refresh boundary.
+function getRefreshBoundarySignature(exports) {
+    var signature = [];
+    signature.push(Refresh.getFamilyByType(exports));
+    if (exports == null || typeof exports !== 'object') // Exit if we can't iterate over exports.
+    // (This is important for legacy environments.)
+    return signature;
+    let isESM = '__esModule' in exports;
+    for(var key in exports){
+        if (key === '__esModule') continue;
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) continue;
+        var exportValue = exports[key];
+        signature.push(key);
+        signature.push(Refresh.getFamilyByType(exportValue));
+    }
+    return signature;
+}
+function registerExportsForReactRefresh(module) {
+    var exports = module.exports, id = module.id;
+    Refresh.register(exports, id + ' %exports%');
+    if (exports == null || typeof exports !== 'object') // Exit if we can't iterate over exports.
+    // (This is important for legacy environments.)
+    return;
+    let isESM = '__esModule' in exports;
+    for(var key in exports){
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) continue;
+        var exportValue = exports[key];
+        Refresh.register(exportValue, id + ' %exports% ' + key);
+    }
+}
+
+},{"react-refresh/runtime":"786KC"}],"digkY":[function() {},{}],"1amxM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SpinnerCircular", ()=>_spinnerCircularJs.SpinnerCircular
+);
+parcelHelpers.export(exports, "SpinnerCircularFixed", ()=>_spinnerCircularFixedJs.SpinnerCircularFixed
+);
+parcelHelpers.export(exports, "SpinnerCircularSplit", ()=>_spinnerCircularSplitJs.SpinnerCircularSplit
+);
+parcelHelpers.export(exports, "SpinnerInfinity", ()=>_spinnerInfinityJs.SpinnerInfinity
+);
+parcelHelpers.export(exports, "Component", ()=>_spinnerDottedJs.Component
+);
+parcelHelpers.export(exports, "SpinnerDotted", ()=>_spinnerDottedJs.SpinnerDotted
+);
+parcelHelpers.export(exports, "SpinnerRound", ()=>_spinnerRoundJs.SpinnerRound
+);
+parcelHelpers.export(exports, "SpinnerRoundOutlined", ()=>_spinnerRoundOutlinedJs.SpinnerRoundOutlined
+);
+parcelHelpers.export(exports, "SpinnerRoundFilled", ()=>_spinnerRoundFilledJs.SpinnerRoundFilled
+);
+parcelHelpers.export(exports, "SpinnerDiamond", ()=>_spinnerDiamondJs.SpinnerDiamond
+);
+parcelHelpers.export(exports, "SpinnerRomb", ()=>_spinnerDiamondJs.SpinnerRomb
+);
+var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
+var _react = require("react");
+var _styleInjectEsFc9E633EJs = require("./style-inject.es-fc9e633e.js");
+var _spinnerCircularJs = require("./SpinnerCircular.js");
+var _spinnerCircularFixedJs = require("./SpinnerCircularFixed.js");
+var _spinnerCircularSplitJs = require("./SpinnerCircularSplit.js");
+var _spinnerInfinityJs = require("./SpinnerInfinity.js");
+var _spinnerDottedJs = require("./SpinnerDotted.js");
+var _spinnerRoundJs = require("./SpinnerRound.js");
+var _spinnerRoundOutlinedJs = require("./SpinnerRoundOutlined.js");
+var _spinnerRoundFilledJs = require("./SpinnerRoundFilled.js");
+var _spinnerDiamondJs = require("./SpinnerDiamond.js");
+
+},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","./SpinnerCircular.js":false,"./SpinnerCircularFixed.js":false,"./SpinnerCircularSplit.js":false,"./SpinnerInfinity.js":"fBRap","./SpinnerDotted.js":false,"./SpinnerRound.js":false,"./SpinnerRoundOutlined.js":false,"./SpinnerRoundFilled.js":false,"./SpinnerDiamond.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8F2e2":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "_", ()=>__rest
+);
+parcelHelpers.export(exports, "a", ()=>__assign
+);
+parcelHelpers.export(exports, "w", ()=>withSharedProps
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */ var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for(var s, i = 1, n = arguments.length; i < n; i++){
+            s = arguments[i];
+            for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+function __rest(s, e) {
+    var t = {};
+    for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function") {
+        for(var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++)if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+    }
+    return t;
+}
+var defaultProps = {
+    color: '#38ad48',
+    enabled: true,
+    size: 50,
+    style: {}
+};
+var normalizeSize = function(size) {
+    return parseFloat(size.toString()).toString() === size.toString() ? size + "px" : size.toString();
+};
+var withSharedProps = function(Component) {
+    var Wrapper = function(props) {
+        var color = props.color, enabled = props.enabled, size = props.size, style = props.style, otherProps = __rest(props, [
+            "color",
+            "enabled",
+            "size",
+            "style"
+        ]);
+        var componentProps = __assign(__assign({}, otherProps), {
+            style: __assign({
+                color: color,
+                overflow: 'visible',
+                width: normalizeSize(size)
+            }, style)
+        });
+        if (!enabled) return null;
+        return _reactDefault.default.createElement(Component, __assign({}, componentProps));
+    };
+    Wrapper.defaultProps = defaultProps;
+    return Wrapper;
+};
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"b2fBk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "a", ()=>secondaryColorDefaultProps
+);
+parcelHelpers.export(exports, "d", ()=>defaultProps
+);
+parcelHelpers.export(exports, "s", ()=>styleInject
+);
+var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
+var defaultProps = {
+    speed: 100,
+    still: false,
+    thickness: 100
+};
+var secondaryColorDefaultProps = _withSharedPropsA1728349Js.a(_withSharedPropsA1728349Js.a({}, defaultProps), {
+    secondaryColor: 'rgba(0,0,0,0.44)'
+});
+function styleInject(css, ref) {
+    if (ref === void 0) ref = {};
+    var insertAt = ref.insertAt;
+    if (!css || typeof document === 'undefined') return;
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    if (insertAt === 'top') {
+        if (head.firstChild) head.insertBefore(style, head.firstChild);
+        else head.appendChild(style);
+    } else head.appendChild(style);
+    if (style.styleSheet) style.styleSheet.cssText = css;
+    else style.appendChild(document.createTextNode(css));
+}
+
+},{"./withSharedProps-a1728349.js":"8F2e2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fBRap":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SpinnerInfinity", ()=>SpinnerInfinity
+);
+var _withSharedPropsA1728349Js = require("./withSharedProps-a1728349.js");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _styleInjectEsFc9E633EJs = require("./style-inject.es-fc9e633e.js");
+var css_248z = "@keyframes spinners-react-infinity{0%{stroke-dasharray:1,347;stroke-dashoffset:75}25%,75%{stroke-dasharray:17,330}50%{stroke-dasharray:1,347}to{stroke-dasharray:1,347;stroke-dashoffset:423}}";
+_styleInjectEsFc9E633EJs.s(css_248z);
+var Component = function(_a) {
+    var secondaryColor = _a.secondaryColor, speed = _a.speed, still = _a.still, thickness = _a.thickness, svgProps = _withSharedPropsA1728349Js._(_a, [
+        "secondaryColor",
+        "speed",
+        "still",
+        "thickness"
+    ]);
+    var strokeWidth = 7 * (thickness / 100);
+    var dashStyle = !still ? {
+        animation: "spinners-react-infinity " + 140 / speed + "s linear infinite"
+    } : {};
+    return _reactDefault.default.createElement("svg", _withSharedPropsA1728349Js.a({
+        fill: "none",
+        viewBox: "0 0 131 55"
+    }, svgProps), _reactDefault.default.createElement("defs", null, _reactDefault.default.createElement("path", {
+        d: "M46.57 45.5138C36.346 55.4954 19.8919 55.4954 9.66794 45.5138C-0.55598 35.5321 -0.55598 19.4678 9.66794 9.48624C19.8919 -0.495412 36.346 -0.495412 46.57 9.48624L84.4303 45.5138C94.6543 55.4954 111.108 55.4954 121.332 45.5138C131.556 35.5321 131.556 19.4678 121.332 9.48624C111.108 -0.495412 94.6543 -0.495412 84.4303 9.48624L46.57 45.5138Z",
+        id: "spinners-react-infinity-path"
+    })), _reactDefault.default.createElement("use", {
+        stroke: secondaryColor,
+        strokeWidth: strokeWidth,
+        xlinkHref: "#spinners-react-infinity-path"
+    }), _reactDefault.default.createElement("use", {
+        fill: "none",
+        stroke: "currentColor",
+        strokeDasharray: "1, 347",
+        strokeDashoffset: "75",
+        strokeLinecap: "round",
+        strokeWidth: strokeWidth,
+        style: dashStyle,
+        xlinkHref: "#spinners-react-infinity-path"
+    }));
+};
+Component.defaultProps = _styleInjectEsFc9E633EJs.a;
+var SpinnerInfinity = _withSharedPropsA1728349Js.w(Component);
+
+},{"./withSharedProps-a1728349.js":"8F2e2","react":"21dqq","./style-inject.es-fc9e633e.js":"b2fBk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6zWfC":[function() {},{}],"8YS8j":[function() {},{}]},["kn9T2","7fmqN","8lqZg"], "8lqZg", "parcelRequire6ea0")
 
 //# sourceMappingURL=index.975ef6c8.js.map
