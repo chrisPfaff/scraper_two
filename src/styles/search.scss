@@ -1,12 +1,17 @@
 @import "mixin.scss";
 
+
 main {
 
 }
 .search-box {
-  @include desktop {
+  @include tablet {
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    align-content: space-between;
+    justify-content: center;
+    gap: 24px;
+  }
+  @include desktop {
+    gap: 32px;
   }
 }
