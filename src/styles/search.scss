@@ -1,17 +1,70 @@
 @import "mixin.scss";
 
-
-main {
-
-}
 .search-box {
   @include tablet {
     display: flex;
     align-content: space-between;
     justify-content: center;
+    align-items: center;
     gap: 24px;
   }
   @include desktop {
     gap: 32px;
   }
+  .element-picker {
+    @include desktop {
+      font-size: 18px;
+    }
+    label {
+      @include desktop {
+        padding-right: 10px;
+      }
+    }
+    #select {
+      @include desktop {
+        font-size: 18px;
+      }
+    }
+  }
+  .url-picker {
+    @include desktop {
+      font-size: 18px;
+    }
+    label {
+      @include desktop {
+        padding-right: 10px;
+      }
+    }
+    input[type=url] {
+      @include desktop {
+        font-size: 18px;
+      }
+    }
+  }
+  input[type=submit] {
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    background-color: #091f20;
+    border: 1px solid white;
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      box-shadow: -5px -5px 5px white;
+      transform: translateY(0.25em);
+   }
+  }
+}
+
+.spinner-box {
+  position: absolute;
+  top: 340px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

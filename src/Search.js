@@ -51,7 +51,7 @@ export default function Search() {
           </select>
         </div>
         <div className="url-picker">
-          <label for="url">Enter an https://</label>
+          <label for="url">Enter a URL</label>
           <input
             onChange={searchSubmit}
             type="url"
