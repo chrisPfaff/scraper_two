@@ -15,6 +15,7 @@ export default function Search() {
   };
   const searchDom = (e) => {
     e.preventDefault();
+    setResults([]);
     setLoading(true);
     fetch(
       `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
