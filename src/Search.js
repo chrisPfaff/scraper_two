@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Results from "./Results";
-import { SpinnerInfinity } from "spinners-react";
+import { SpinnerDiamond } from "spinners-react";
 import "./styles/search.scss";
 
 export default function Search() {
@@ -35,13 +35,14 @@ export default function Search() {
     <div>
       <div className="search-box">
         <div className="element-picker">
-          <label for="select">Pick an HTML Element</label>
+          <label htmlFor="select">Pick an HTML Element</label>
           <select id="select" onChange={getElements} value={element}>
             <option value="select">Select</option>
             <option value="div">Div</option>
             <option value="section">Section</option>
             <option value="article">Article</option>
             <option value="a">A</option>
+            <option value="href">Href</option>
             <option value="p">P</option>
             <option value="h1">H1</option>
             <option value="h2">H2</option>
@@ -68,12 +69,12 @@ export default function Search() {
       </div>
       {loading && (
         <div className="spinner-box">
-          <SpinnerInfinity
-            size={100}
-            thickness={153}
+          <SpinnerDiamond
+            size={90}
+            thickness={180}
             speed={68}
-            color="rgba(63, 57, 172, 1)"
-            secondaryColor="rgba(163, 172, 57, 0.44)"
+            color="white"
+            secondaryColor="rgba(9, 31, 32, 1)"
           />
         </div>
       )}
