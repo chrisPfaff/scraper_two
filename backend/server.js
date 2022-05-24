@@ -20,6 +20,12 @@ fastify.get("/hello", async (request, reply) => {
       );
       reply.send({ data: hrefs }).code(200);
       await browser.close();
+    } else if (element === "img") {
+      const imgs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("img"), (img) => img.src)
+      );
+      reply.send({ data: imgs }).code(200);
+      await browser.close();
     } else {
       const elements = await page.$$(element);
       const results = [];
