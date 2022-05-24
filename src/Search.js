@@ -69,7 +69,7 @@ export default function Search() {
       {loading && (
         <div className="spinner-box">
           <SpinnerInfinity
-            size={74}
+            size={100}
             thickness={153}
             speed={68}
             color="rgba(63, 57, 172, 1)"
