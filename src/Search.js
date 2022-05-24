@@ -41,6 +41,7 @@ export default function Search() {
             <option value="div">Div</option>
             <option value="section">Section</option>
             <option value="article">Article</option>
+            <option value="img">Img Src</option>
             <option value="a">A</option>
             <option value="href">Href</option>
             <option value="p">P</option>
