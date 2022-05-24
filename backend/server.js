@@ -12,18 +12,28 @@ fastify.get("/hello", async (request, reply) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(webpage);
-    const elements = await page.$$(element);
-    const results = [];
-    for (let i = 0; i < elements.length; i++) {
-      const htmlElement = elements[i];
-      const textElement = await page.evaluate(
-        (htmlElement) => htmlElement.textContent,
-        htmlElement
+    if (element === "href") {
+      const hrefs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("a[href]"), (a) =>
+          a.getAttribute("href")
+        )
       );
-      results.push(textElement);
+      reply.send({ data: hrefs }).code(200);
+      await browser.close();
+    } else {
+      const elements = await page.$$(element);
+      const results = [];
+      for (let i = 0; i < elements.length; i++) {
+        const htmlElement = elements[i];
+        const textElement = await page.evaluate(
+          (htmlElement) => htmlElement.textContent,
+          htmlElement
+        );
+        results.push(textElement);
+      }
+      reply.send({ data: results }).code(200);
+      await browser.close();
     }
-    reply.send({ data: results }).code(200);
-    await browser.close();
   })();
 });
 
