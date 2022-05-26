@@ -3,8 +3,8 @@ export function ImageResults(data) {
   const render = () => {
     if (data !== undefined) {
       return (
-        <div className="results">
-          <h2>Results</h2>
+        <div className="image-results">
+          <h2>Images</h2>
           {data.map((result) => {
             return <img src={result} alt="result" />;
           })}

@@ -17,21 +17,30 @@ export default function Search() {
   };
   const searchDom = (e) => {
     e.preventDefault();
-    setResults([]);
+    clearState();
     setLoading(true);
     fetch(
       `http://127.0.0.1:3000/search?webpage=${search}&element=${element}`
     ).then((res) => {
-      res.json().then((element) => {
-        console.log(element.data);
-        setResults(element.data);
-        setLoading(false);
+      res.json().then(({ data }) => {
+        if (element === "img-src") {
+          setImageResults(data);
+          setLoading(false);
+        } else {
+          setResults(data);
+          setLoading(false);
+        }
       });
     });
   };
   const getElements = (e) => {
     e.preventDefault();
     setElement(e.target.value);
+  };
+
+  const clearState = () => {
+    setImageResults([]);
+    setResults([]);
   };
   return (
     <div>
@@ -44,6 +53,7 @@ export default function Search() {
             <option value="section">Section</option>
             <option value="article">Article</option>
             <option value="img">Img Src</option>
+            <option value="img-src">Image</option>
             <option value="a">A</option>
             <option value="href">Href</option>
             <option value="p">P</option>
