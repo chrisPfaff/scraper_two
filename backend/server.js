@@ -5,7 +5,7 @@ fastify.register(require("@fastify/cors"), {
   origin: "*",
 });
 
-fastify.get("/hello", async (request, reply) => {
+fastify.get("/search", async (request, reply) => {
   let webpage = request.query.webpage;
   let element = request.query.element;
   (async () => {
