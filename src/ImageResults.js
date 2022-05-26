@@ -1,3 +1,5 @@
+import "./styles/results.scss";
+
 export function ImageResults(data) {
   data = data.results;
   const render = () => {
@@ -5,9 +7,11 @@ export function ImageResults(data) {
       return (
         <div className="image-results">
           <h2>Images</h2>
-          {data.map((result) => {
-            return <img src={result} alt="result" />;
-          })}
+          <div className="image-holder">
+            {data.map((result) => {
+              return <img src={result} alt="result" />;
+            })}
+          </div>
         </div>
       );
     }
