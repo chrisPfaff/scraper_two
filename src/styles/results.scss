@@ -24,6 +24,32 @@
     }
   }
 }
+.image-results {
+  text-align: center;
+  img {
+    height: 150px;
+  }
+  h2 {
+    text-decoration: underline;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin: 24px 0px;
+    @include desktop {
+      font-size: 32px;
+      margin: 32px 0px;
+    }
+  }
+  .image-holder {
+    @include desktop {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }}
+
+}
 p {
   font-size: 18px;
   line-height: 1.33;
