@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Results from "./Results";
+import { ImageResults } from "./ImageResults";
 import { SpinnerDiamond } from "spinners-react";
 import "./styles/search.scss";
 
@@ -7,6 +8,7 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [element, setElement] = useState("");
   const [results, setResults] = useState([]);
+  const [imageResults, setImageResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const searchSubmit = (e) => {
@@ -18,7 +20,7 @@ export default function Search() {
     setResults([]);
     setLoading(true);
     fetch(
-      `http://127.0.0.1:3000/hello?webpage=${search}&element=${element}`
+      `http://127.0.0.1:3000/search?webpage=${search}&element=${element}`
     ).then((res) => {
       res.json().then((element) => {
         console.log(element.data);
@@ -79,6 +81,7 @@ export default function Search() {
           />
         </div>
       )}
+      {imageResults.length > 0 && <ImageResults results={imageResults} />}
       {results.length > 0 && <Results results={results} />}
     </div>
   );
