@@ -20,7 +20,7 @@ fastify.get("/search", async (request, reply) => {
       );
       reply.send({ data: hrefs }).code(200);
       await browser.close();
-    } else if (element === "img") {
+    } else if (element === "img" || element === "img-src") {
       const imgs = await page.evaluate(() =>
         Array.from(document.querySelectorAll("img"), (img) => img.src)
       );
