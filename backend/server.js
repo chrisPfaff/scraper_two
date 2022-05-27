@@ -1,7 +1,9 @@
 const fastify = require("fastify")({ logger: true });
 const puppeteer = require("puppeteer");
-const { getFirestore } = require("firebase/firestore");
-const { appDB } = require("./utils/database");
+const writeUserData = require("./utils/database");
+
+writeUserData("test", "test");
+writeUserData("test2", "test2");
 
 fastify.register(require("@fastify/cors"), {
   origin: "*",
