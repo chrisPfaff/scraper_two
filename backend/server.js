@@ -4,6 +4,7 @@ const writeUserData = require("./utils/database");
 
 writeUserData("test", "test");
 writeUserData("test2", "test2");
+writeUserData("test2", "test2");
 
 fastify.register(require("@fastify/cors"), {
   origin: "*",
