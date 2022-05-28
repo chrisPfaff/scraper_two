@@ -5,7 +5,7 @@ package-lock.json
 coverage/
 .cache/
 database.js
-
+.env
 .parcel-cache
 dist/
 lib/
