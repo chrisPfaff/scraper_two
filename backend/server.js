@@ -2,9 +2,7 @@ const fastify = require("fastify")({ logger: true });
 const puppeteer = require("puppeteer");
 const writeUserData = require("./utils/database");
 
-writeUserData("test", "test");
-writeUserData("test2", "test2");
-writeUserData("test2", "test2");
+writeUserData("test3", "test3");
 
 fastify.register(require("@fastify/cors"), {
   origin: "*",
