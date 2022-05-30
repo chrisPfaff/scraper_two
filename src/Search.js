@@ -44,7 +44,10 @@ export default function Search() {
     setResults([]);
   };
 
-  const saveResults = () => {};
+  const saveResults = () => {
+    setSave(true);
+    console.log("set save");
+  };
 
   return (
     <div>
@@ -91,7 +94,7 @@ export default function Search() {
             onChange={saveResults}
           />
         </div>
-        <input onClick={searchDom} type="submit" value="Get DOM Elements" />
+        <input onClick={saveResults} type="submit" value="Get DOM Elements" />
       </div>
       {loading && (
         <div className="spinner-box">
