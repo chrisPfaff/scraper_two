@@ -59,6 +59,22 @@
       transform: translateY(0.25em);
    }
   }
+  .save-checkbox {
+    @include desktop {
+      font-size: 18px;
+    }
+    label {
+      @include desktop {
+        padding-right: 10px;
+      }
+    }
+    input[type=checkbox] {
+      appearance: auto;
+      @include desktop {
+        font-size: 18px;
+      }
+    }
+  }
 }
 
 .spinner-box {
