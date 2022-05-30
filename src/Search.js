@@ -10,6 +10,7 @@ export default function Search() {
   const [results, setResults] = useState([]);
   const [imageResults, setImageResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [save, setSave] = useState(false);
 
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +43,9 @@ export default function Search() {
     setImageResults([]);
     setResults([]);
   };
+
+  const saveResults = () => {};
+
   return (
     <div>
       <div className="search-box">
@@ -76,6 +80,15 @@ export default function Search() {
             pattern="https://.*"
             size="30"
             required
+          />
+        </div>
+        <div className="save-checkbox">
+          <label htmlFor="save">Save Results</label>
+          <input
+            className="checkbox"
+            type="checkbox"
+            id="save"
+            onChange={saveResults}
           />
         </div>
         <input onClick={searchDom} type="submit" value="Get DOM Elements" />
