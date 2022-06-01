@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Results from "./Results";
+import { useMachine } from "@xstate/react";
 import { ImageResults } from "./ImageResults";
 import { SpinnerDiamond } from "spinners-react";
 import "./styles/search.scss";
