@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Results from "./Results";
 import { useMachine } from "@xstate/react";
+import activeMachine from "../backend/utility/machine/machine";
 import { ImageResults } from "./ImageResults";
 import { SpinnerDiamond } from "spinners-react";
 import "./styles/search.scss";
@@ -10,7 +11,7 @@ export default function Search() {
   const [element, setElement] = useState("");
   const [results, setResults] = useState([]);
   const [imageResults, setImageResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingState, setLoadingState] = useMachine(activeMachine);
   const [save, setSave] = useState(false);
 
   const searchSubmit = (e) => {
@@ -20,17 +21,17 @@ export default function Search() {
   const searchDom = (e) => {
     e.preventDefault();
     clearState();
-    setLoading(true);
+    setLoadingState("TOGGLE");
     fetch(
       `http://127.0.0.1:3000/search?webpage=${search}&element=${element}`
     ).then((res) => {
       res.json().then(({ data }) => {
         if (element === "img-src") {
           setImageResults(data);
-          setLoading(false);
+          setLoadingState("TOGGLE");
         } else {
           setResults(data);
-          setLoading(false);
+          setLoadingState("TOGGLE");
         }
       });
     });
@@ -95,9 +96,9 @@ export default function Search() {
             onChange={saveResults}
           />
         </div>
-        <input onClick={saveResults} type="submit" value="Get DOM Elements" />
+        <input onClick={searchDom} type="submit" value="Get DOM Elements" />
       </div>
-      {loading && (
+      {loadingState.value === "active" && (
         <div className="spinner-box">
           <SpinnerDiamond
             size={90}
