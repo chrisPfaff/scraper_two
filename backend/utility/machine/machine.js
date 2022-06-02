@@ -1,6 +1,6 @@
 import { createMachine } from "xstate";
 
-const toggleMachine = createMachine({
+const activeMachine = createMachine({
   id: "toggle",
   initial: "inactive",
   states: {
@@ -13,4 +13,4 @@ const toggleMachine = createMachine({
   },
 });
 
-export default toggleMachine;
+export default activeMachine;
