@@ -1,6 +1,6 @@
 const fastify = require("fastify")({ logger: true });
 const puppeteer = require("puppeteer");
-const writeUserData = require("./utils/database");
+const writeUserData = require("./utility/db/database");
 
 writeUserData("test3", "test3");
 
