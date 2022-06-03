@@ -13,7 +13,7 @@ export default function Search() {
   const [imageResults, setImageResults] = useState([]);
   const [loadingState, setLoadingState] = useMachine(activeMachine);
   const [save, setSave] = useState(false);
-  const resultsHolder = useRef();
+  //const resultsHolder = useRef();
 
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export default function Search() {
           setImageResults(data);
           setLoadingState("TOGGLE");
         } else {
-          resultsHolder.current.classList.add("active");
+          //resultsHolder.current.classList.add("active");
           setResults(data);
           setLoadingState("TOGGLE");
         }
@@ -46,7 +46,7 @@ export default function Search() {
   const clearState = () => {
     setImageResults([]);
     setResults([]);
-    resultsHolder.current.classList.remove("active");
+    //resultsHolder.current.classList.remove("active");
   };
 
   const saveResults = () => {
@@ -113,7 +113,7 @@ export default function Search() {
         </div>
       )}
       {imageResults.length > 0 && <ImageResults results={imageResults} />}
-      <div className="results-holder" ref={resultsHolder}>
+      <div className={"results-holder" + (results.length > 0 ? " active" : "")}>
         {results.length > 0 && <Results results={results} />}
       </div>
     </div>
