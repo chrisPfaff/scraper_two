@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Results from "./Results";
 import { useMachine } from "@xstate/react";
 import activeMachine from "../backend/utility/machine/machine";
@@ -13,7 +13,6 @@ export default function Search() {
   const [imageResults, setImageResults] = useState([]);
   const [loadingState, setLoadingState] = useMachine(activeMachine);
   const [save, setSave] = useState(false);
-  //const resultsHolder = useRef();
 
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +30,6 @@ export default function Search() {
           setImageResults(data);
           setLoadingState("TOGGLE");
         } else {
-          //resultsHolder.current.classList.add("active");
           setResults(data);
           setLoadingState("TOGGLE");
         }
@@ -46,7 +44,6 @@ export default function Search() {
   const clearState = () => {
     setImageResults([]);
     setResults([]);
-    //resultsHolder.current.classList.remove("active");
   };
 
   const saveResults = () => {
