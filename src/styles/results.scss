@@ -50,6 +50,22 @@
   }}
 
 }
+.results-holder {
+  background-color: black;
+  border-radius: 12px;
+  height: 0%;
+  opacity: 0;
+  width: 100%;
+  transition: height 1s;
+  transition: /* height 1s,*/ opacity 1s;
+  &.active {
+    height: 100%;
+    opacity: 1;
+  }
+  @include desktop {
+    margin-top: 40px;
+  }
+}
 p {
   font-size: 18px;
   line-height: 1.33;
