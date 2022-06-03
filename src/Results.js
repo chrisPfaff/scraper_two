@@ -1,6 +1,7 @@
 import "./styles/results.scss";
 
 export default function Results(data) {
+  console.log("render");
   data = data.results;
   const render = () => {
     if (data !== undefined) {
