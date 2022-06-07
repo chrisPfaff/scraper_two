@@ -2,7 +2,8 @@ const fastify = require("fastify")({ logger: true });
 const puppeteer = require("puppeteer");
 const writeUserData = require("./utility/db/database");
 
-writeUserData("test3", "test3");
+//Write to DB;
+//writeUserData("test3", "test3");
 
 fastify.register(require("@fastify/cors"), {
   origin: "*",
@@ -44,6 +45,11 @@ fastify.get("/search", async (request, reply) => {
       await browser.close();
     }
   })();
+});
+
+fastify.post("/signup", (request, reply) => {
+  const token = fastify.jwt.sign({ username: "Adam Smith" });
+  reply.send({ token });
 });
 
 const start = async () => {
