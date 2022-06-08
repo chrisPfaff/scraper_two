@@ -6,31 +6,45 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`/signup?user=${username}`).then((res) => {
-      res.json().then(({ token }) => {
-        localStorage.setItem("token", token);
+    fetch(`http://127.0.0.1:3000/signup`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      res.json().then((item) => {
+        console.log(item);
       });
     });
+    // res.json().then((item) => {
+    //   console.log(item);
+    //   //localStorage.setItem("token", token);
+    // });
+    //});
   };
 
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
 
-const handleUsername = (e) => {
-  console.log(username);
-  setUsername(e.target.value);
-};
-
-const render = () => {
-  return (
-    <div className="sign-up">
-      <form onSubmit={(e) => handleSubmit}>
-        <label>Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => handleUsername(e.target.value)}
-        />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  );
-};
+  const render = () => {
+    return (
+      <div className="sign-up">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <label>Username:</label>
+          <input
+            placeholder="username"
+            type="text"
+            value={username}
+            onChange={(e) => handleUsername(e)}
+          />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    );
+  };
+  return render();
+}
