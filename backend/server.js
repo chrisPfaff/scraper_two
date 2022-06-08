@@ -53,10 +53,8 @@ fastify.get("/search", async (request, reply) => {
 });
 
 fastify.post("/signup", (request, reply) => {
-  console.log(request);
-  //const token = fastify.jwt.sign({ user: request.query.user });
-  //console.log("token", token);
-  reply.send({ token: "token" }).code(200);
+  const token = fastify.jwt.sign({ user: request.body.username });
+  reply.send({ token: token }).code(200);
 });
 
 // fastify.get("/protected", async (request, reply) => {
