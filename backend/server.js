@@ -53,19 +53,21 @@ fastify.get("/search", async (request, reply) => {
 });
 
 fastify.post("/signup", (request, reply) => {
-  const token = fastify.jwt.sign({ username: "Adam Smith" });
+  const token = fastify.jwt.sign({ user: request.query.user });
   reply.send({ token });
 });
 
-// fastify.get(
-//   "/protected",
-//   {
-//     onRequest: [fastify.authenticate],
-//   },
-//   async function (request, reply) {
-//     return request.user;
+// fastify.get("/protected", async (request, reply) => {
+//   return request.user;
+// });
+
+// fastify.addHook("onRequest", async (request, reply) => {
+//   try {
+//     await request.jwtVerify();
+//   } catch (err) {
+//     reply.send(err);
 //   }
-// );
+// });
 
 const start = async () => {
   try {
