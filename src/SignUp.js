@@ -1,4 +1,4 @@
-import "./styles/results.scss";
+import "./styles/sign-up.scss";
 import { useState } from "react";
 
 export default function SignUp(props) {

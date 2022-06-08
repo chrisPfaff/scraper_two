@@ -6,25 +6,17 @@ import { useState } from "react";
 import "./styles/app.scss";
 
 export default function MyApp() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  // above render
   toggleModal = () => {
     setShowModal(!showModal);
-    //this.setState({ showModal: !this.state.showModal })
+    setLoading(!loading);
   };
 
-  // below description
   return (
     <main>
-      <button
-        onClick={this.toggleModal}
-        style={{ backgroundColor: "black", color: "white" }}
-      >
-        Show Modal
-      </button>
-      {showModal ? (
+      {loading ? (
         <Modal>
           <SignUp closeModal={setShowModal} />
         </Modal>
