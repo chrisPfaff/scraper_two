@@ -1,11 +1,12 @@
 import "./styles/results.scss";
 import { useState } from "react";
 
-export default function SignUp() {
+export default function SignUp(props) {
   const [username, setUsername] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    props.closeModal(false);
     fetch(`http://127.0.0.1:3000/signup`, {
       method: "POST",
       body: JSON.stringify({
@@ -16,14 +17,10 @@ export default function SignUp() {
       },
     }).then((res) => {
       res.json().then((item) => {
-        console.log(item);
+        console.log(item.token);
+        localStorage.setItem("token", item.token);
       });
     });
-    // res.json().then((item) => {
-    //   console.log(item);
-    //   //localStorage.setItem("token", token);
-    // });
-    //});
   };
 
   const handleUsername = (e) => {
