@@ -7,7 +7,7 @@ import "./styles/app.scss";
 
 export default function MyApp() {
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   toggleModal = () => {
     setShowModal(!showModal);
@@ -18,7 +18,7 @@ export default function MyApp() {
     <main>
       {loading ? (
         <Modal>
-          <SignUp closeModal={setShowModal} />
+          <SignUp closeModal={toggleModal} />
         </Modal>
       ) : null}
       <div className="container">
