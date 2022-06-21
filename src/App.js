@@ -21,11 +21,13 @@ export default function MyApp() {
           <SignUp closeModal={toggleModal} />
         </Modal>
       ) : null}
-      <div className="container">
-        <h1 className="h1-heading">Scraper Two</h1>
-        <Search />
-        <Results />
-      </div>
+      {loading ? null : (
+        <div className="container">
+          <h1 className="h1-heading">Scraper Two</h1>
+          <Search />
+          <Results />
+        </div>
+      )}
     </main>
   );
 }
