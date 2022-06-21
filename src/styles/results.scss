@@ -57,7 +57,7 @@
   opacity: 0;
   width: 100%;
   transition: height 1s;
-  transition: /* height 1s,*/ opacity 1s;
+  transition: opacity 1s;
   &.active {
     height: 100%;
     opacity: 1;
