@@ -2,12 +2,19 @@ import Search from "./Search";
 import Results from "./Results";
 import SignUp from "./SignUp";
 import Modal from "./Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/app.scss";
 
 export default function MyApp() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(true);
+
+  useEffect(() => {
+    const item = localStorage.getItem("token");
+    if (item) {
+      setLoading(false);
+    }
+  }, []);
 
   toggleModal = () => {
     setShowModal(!showModal);
