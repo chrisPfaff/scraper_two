@@ -10,10 +10,25 @@ export default function MyApp() {
   const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
-    const item = localStorage.getItem("token");
-    if (item) {
-      setLoading(false);
-    }
+    const fetchUserData = async () => {
+      const item = await localStorage.getItem("token");
+      await fetch(`http://127.0.0.1:3000/protected`, {
+        method: "POST",
+        body: JSON.stringify({
+          token: item,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        res.json().then((item) => {
+          if (item.user == true) {
+            setLoading(false);
+          }
+        });
+      });
+    };
+    fetchUserData();
   }, []);
 
   toggleModal = () => {
