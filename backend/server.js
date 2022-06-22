@@ -57,17 +57,14 @@ fastify.post("/signup", (request, reply) => {
   reply.send({ token: token }).code(200);
 });
 
-// fastify.get("/protected", async (request, reply) => {
-//   return request.user;
-// });
-
-// fastify.addHook("onRequest", async (request, reply) => {
-//   try {
-//     await request.jwtVerify();
-//   } catch (err) {
-//     reply.send(err);
-//   }
-// });
+fastify.post("/protected", async (request, reply) => {
+  const tokenCheck = request.body.token;
+  fastify.jwt.verify(tokenCheck, (err, decoded) => {
+    if (err) fastify.log.error(err);
+    fastify.log.info(`Token verified. Foo is ${decoded}`);
+  });
+  reply.send({ user: true }).code(200);
+});
 
 const start = async () => {
   try {
