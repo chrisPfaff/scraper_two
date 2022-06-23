@@ -1,11 +1,13 @@
 const fastify = require("fastify")({ logger: true });
 const puppeteer = require("puppeteer");
-const writeUserData = require("./utility/db/database");
+const bcrypt = require("bcrypt");
+const { writeUserData, readUserData } = require("./utility/db/database");
 require("dotenv").config();
+const authenticate = `${process.env.PASSWORD_KEY}`;
 
 //Write to DB;
-//writeUserData("test3", "test3");
-
+//writeUserData("test4", "test4");
+readUserData();
 fastify.register(require("@fastify/cors"), {
   origin: "*",
 });
@@ -53,8 +55,8 @@ fastify.get("/search", async (request, reply) => {
 });
 
 fastify.post("/signup", (request, reply) => {
-  const token = fastify.jwt.sign({ user: request.body.username });
-  reply.send({ token: token }).code(200);
+  //const token = fastify.jwt.sign({ user: request.body.username });
+  //reply.send({ token: token }).code(200);
 });
 
 fastify.post("/protected", async (request, reply) => {
