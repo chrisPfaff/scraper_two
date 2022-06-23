@@ -4,10 +4,11 @@ const bcrypt = require("bcrypt");
 const { writeUserData, readUserData } = require("./utility/db/database");
 require("dotenv").config();
 const authenticate = `${process.env.PASSWORD_KEY}`;
+const saltRounds = 10;
 
 //Write to DB;
 //writeUserData("test4", "test4");
-readUserData();
+//readUserData(name);
 fastify.register(require("@fastify/cors"), {
   origin: "*",
 });
@@ -55,8 +56,12 @@ fastify.get("/search", async (request, reply) => {
 });
 
 fastify.post("/signup", (request, reply) => {
-  //const token = fastify.jwt.sign({ user: request.body.username });
-  //reply.send({ token: token }).code(200);
+  const token = request.body.username;
+  bcrypt.hash(request.body.username, saltRounds, function (err, hash) {
+    writeUserData(request.body.username, hash);
+    const jwtToken = fastify.jwt.sign({ token });
+    reply.send({ token: jwtToken }).code(200);
+  });
 });
 
 fastify.post("/protected", async (request, reply) => {
@@ -67,6 +72,8 @@ fastify.post("/protected", async (request, reply) => {
   });
   reply.send({ user: true }).code(200);
 });
+
+fastify.posy("/login", async (request, reply) => {});
 
 const start = async () => {
   try {
