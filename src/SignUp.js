@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function SignUp(props) {
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +27,9 @@ export default function SignUp(props) {
   const handleUsername = (e) => {
     setUsername(e.target.value);
   };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
   const render = () => {
     return (
@@ -37,6 +41,13 @@ export default function SignUp(props) {
             type="text"
             value={username}
             onChange={(e) => handleUsername(e)}
+          />
+          <label>Password:</label>
+          <input
+            placeholder="password"
+            type="password"
+            value={password}
+            onChange={(e) => handlePassword(e)}
           />
           <button type="submit">Sign Up</button>
         </form>
