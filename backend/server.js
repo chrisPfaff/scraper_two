@@ -73,7 +73,7 @@ fastify.post("/protected", async (request, reply) => {
   reply.send({ user: true }).code(200);
 });
 
-fastify.posy("/login", async (request, reply) => {});
+fastify.post("/login", async (request, reply) => {});
 
 const start = async () => {
   try {
