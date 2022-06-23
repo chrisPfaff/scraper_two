@@ -8,6 +8,7 @@ export default function SignUp(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.closeModal(false);
+    props.userCreate(false);
     fetch(`http://127.0.0.1:3000/signup`, {
       method: "POST",
       body: JSON.stringify({
