@@ -8,10 +8,11 @@ export default function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.closeModal(false);
-    fetch(`http://127.0.0.1:3000/signup`, {
+    fetch(`http://127.0.0.1:3000/login`, {
       method: "POST",
       body: JSON.stringify({
         username: username,
+        password: password,
       }),
       headers: {
         "Content-Type": "application/json",

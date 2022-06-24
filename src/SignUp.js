@@ -13,6 +13,7 @@ export default function SignUp(props) {
       method: "POST",
       body: JSON.stringify({
         username: username,
+        password: password,
       }),
       headers: {
         "Content-Type": "application/json",
