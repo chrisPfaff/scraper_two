@@ -56,10 +56,12 @@ fastify.get("/search", async (request, reply) => {
 });
 
 fastify.post("/signup", (request, reply) => {
-  const token = request.body.username;
-  bcrypt.hash(request.body.username, saltRounds, function (err, hash) {
-    writeUserData(request.body.username, hash);
-    const jwtToken = fastify.jwt.sign({ token });
+  const username = request.body.username;
+  const password = request.body.password;
+  console.log(username, password);
+  bcrypt.hash(request.body.password, saltRounds, function (err, hash) {
+    writeUserData(username, hash);
+    const jwtToken = fastify.jwt.sign({ username });
     reply.send({ token: jwtToken }).code(200);
   });
 });
@@ -73,7 +75,19 @@ fastify.post("/protected", async (request, reply) => {
   reply.send({ user: true }).code(200);
 });
 
-fastify.post("/login", async (request, reply) => {});
+fastify.post("/login", async (request, reply) => {
+  const username = request.body.username;
+  const password = request.body.password;
+  const hash = await readUserData(username);
+  console.log("hash", hash);
+  bcrypt.compare(password, hash, function (err, result) {
+    if (err) {
+      return err;
+    } else {
+      console.log(result);
+    }
+  });
+});
 
 const start = async () => {
   try {
