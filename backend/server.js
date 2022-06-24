@@ -79,7 +79,6 @@ fastify.post("/login", async (request, reply) => {
   const username = request.body.username;
   const password = request.body.password;
   const hash = await readUserData(username);
-  console.log("hash", hash);
   bcrypt.compare(password, hash, function (err, result) {
     if (err) {
       return err;
@@ -87,6 +86,7 @@ fastify.post("/login", async (request, reply) => {
       console.log(result);
     }
   });
+  reply.send({ user: true }).code(200);
 });
 
 const start = async () => {
