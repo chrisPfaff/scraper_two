@@ -78,13 +78,13 @@ fastify.post("/protected", async (request, reply) => {
 fastify.post("/login", async (request, reply) => {
   const username = request.body.username;
   const password = request.body.password;
+  const jwtToken = fastify.jwt.sign({ username });
   const hash = await readUserData(username);
   bcrypt.compare(password, hash.username, function (err, result) {
-    console.log(result);
-    if (err) {
+    if (result === false) {
       reply.send({ user: false }).code(400);
     } else {
-      reply.send({ user: true }).code(200);
+      reply.send({ user: true, token: jwtToken }).code(200);
     }
   });
 });
