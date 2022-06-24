@@ -7,7 +7,6 @@ export default function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.closeModal(false);
     fetch(`http://127.0.0.1:3000/login`, {
       method: "POST",
       body: JSON.stringify({
@@ -19,8 +18,11 @@ export default function Login(props) {
       },
     }).then((res) => {
       res.json().then((item) => {
-        console.log(item.token);
-        localStorage.setItem("token", item.token);
+        console.log(item.user);
+        if (item.user === true) {
+          props.closeModal(false);
+          localStorage.setItem("token", item.token);
+        }
       });
     });
   };
