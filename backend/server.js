@@ -58,7 +58,6 @@ fastify.get("/search", async (request, reply) => {
 fastify.post("/signup", (request, reply) => {
   const username = request.body.username;
   const password = request.body.password;
-  console.log(username, password);
   bcrypt.hash(request.body.password, saltRounds, function (err, hash) {
     writeUserData(username, hash);
     const jwtToken = fastify.jwt.sign({ username });
