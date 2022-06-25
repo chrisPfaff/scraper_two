@@ -7,26 +7,23 @@ import { SpinnerDiamond } from "spinners-react";
 import "./styles/search.scss";
 
 export default function Search() {
-  const [search, setSearch] = useState("");
-  const [element, setElement] = useState("");
+  const [searchItems, setSearchItems] = useState({
+    element: "",
+    url: "",
+  });
   const [results, setResults] = useState([]);
   const [imageResults, setImageResults] = useState([]);
   const [loadingState, setLoadingState] = useMachine(activeMachine);
-  const [save, setSave] = useState(false);
 
-  const searchSubmit = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
   const searchDom = (e) => {
     e.preventDefault();
     clearState();
     setLoadingState("TOGGLE");
     fetch(
-      `http://127.0.0.1:3000/search?webpage=${search}&element=${element}`
+      `http://127.0.0.1:3000/search?webpage=${searchItems.url}&element=${searchItems.element}`
     ).then((res) => {
       res.json().then(({ data }) => {
-        if (element === "img-src") {
+        if (searchItems.element === "img-src") {
           setImageResults(data);
           setLoadingState("TOGGLE");
         } else {
@@ -36,9 +33,12 @@ export default function Search() {
       });
     });
   };
+
   const getElements = (e) => {
-    e.preventDefault();
-    setElement(e.target.value);
+    setSearchItems({
+      ...searchItems,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const clearState = () => {
@@ -46,17 +46,22 @@ export default function Search() {
     setResults([]);
   };
 
-  const saveResults = () => {
-    setSave(true);
-    console.log("set save");
-  };
-
   return (
     <div>
-      <div className="search-box">
+      <form
+        className="search-box"
+        onSubmit={(e) => {
+          searchDom(e);
+        }}
+      >
         <div className="element-picker">
           <label htmlFor="select">Pick an HTML Element</label>
-          <select id="select" onChange={getElements} value={element}>
+          <select
+            id="select"
+            name="element"
+            onChange={(e) => getElements(e)}
+            value={searchItems.element}
+          >
             <option value="select">Select</option>
             <option value="div">Div</option>
             <option value="section">Section</option>
@@ -77,7 +82,7 @@ export default function Search() {
         <div className="url-picker">
           <label htmlFor="url">Enter a URL</label>
           <input
-            onChange={searchSubmit}
+            onChange={(e) => getElements(e)}
             type="url"
             name="url"
             id="url"
@@ -87,17 +92,8 @@ export default function Search() {
             required
           />
         </div>
-        <div className="save-checkbox">
-          <label htmlFor="save">Save Results</label>
-          <input
-            className="checkbox"
-            type="checkbox"
-            id="save"
-            onChange={saveResults}
-          />
-        </div>
-        <input onClick={searchDom} type="submit" value="Get DOM Elements" />
-      </div>
+        <input type="submit" value="Get DOM Elements" />
+      </form>
       {loadingState.value === "active" && (
         <div className="spinner-box">
           <SpinnerDiamond
