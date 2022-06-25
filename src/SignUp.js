@@ -2,8 +2,10 @@ import "./styles/sign-up.scss";
 import { useState } from "react";
 
 export default function SignUp(props) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,8 +14,8 @@ export default function SignUp(props) {
     fetch(`http://127.0.0.1:3000/signup`, {
       method: "POST",
       body: JSON.stringify({
-        username: username,
-        password: password,
+        username: user.username,
+        password: user.password,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -26,11 +28,11 @@ export default function SignUp(props) {
     });
   };
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const render = () => {
@@ -41,15 +43,17 @@ export default function SignUp(props) {
           <input
             placeholder="username"
             type="text"
-            value={username}
-            onChange={(e) => handleUsername(e)}
+            name="username"
+            value={user.username}
+            onChange={(e) => handleChange(e)}
           />
           <label>Password:</label>
           <input
             placeholder="password"
             type="password"
-            value={password}
-            onChange={(e) => handlePassword(e)}
+            name="password"
+            value={user.password}
+            onChange={(e) => handleChange(e)}
           />
           <button type="submit">Sign Up</button>
         </form>
